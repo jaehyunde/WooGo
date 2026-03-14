@@ -1,0 +1,371 @@
+{
+  "daysExpired": "{days} Tage abgelaufen",
+  "@daysExpired": {
+        "placeholders": {
+          "days": {
+            "type": "int"
+          }
+        }
+      },
+  "today": "Heute",
+  "daysLeft": "{days} Tage übrig",
+  "@daysLeft": {
+          "placeholders": {
+            "days": {
+              "type": "int"
+            }
+          }
+        },
+  "storageFridge": "Kühlschrank",
+  "storageFreezer": "Gefrierschrank",
+  "storagePantry": "Vorratskammer",
+  "ateOne": "1 Artikel gegessen",
+  "discardedOne": "1 Artikel entsorgt",
+  "undoDiscardFromHistory": "Um das Entsorgen rückgängig zu machen, stelle es im Entsorgungsverlauf wieder her",
+  "undo": "Rückgängig",
+  "toggleFavorite": "Favorit setzen/entfernen",
+  "selectQuantityAndDate": "Bitte Menge und Datum auswählen",
+  "days": "Tage",
+  "day": "Tag",
+  "editCurrentItemDateOnly": "Nur das Datum bearbeiten",
+  "expiryUpdated": "Ablaufdatum aktualisiert!",
+  "addAsNewExpiryItem": "Neuen Artikel hinzufügen",
+  "addedAsNewExpiryItem": "{count} Artikel mit neuem Ablaufdatum hinzugefügt.",
+  "add": "Hinzufügen",
+  "addedItems": "{count} Artikel hinzugefügt.",
+  "@addedItems": {
+      "placeholders": {
+        "itemname": {
+            "type": "String"
+                },
+        "count":{
+            "type":"int"
+          }
+      }
+    },
+  "discard": "Entsorgen",
+  "discardedItems": "{itemname} {count} Artikel entsorgt.",
+  "@discardedItems": {
+        "placeholders": {
+            "itemname": {
+                "type": "String"
+                },
+            "count":{
+                "type":"int"
+            }
+        }
+      },
+  "eat": "Gegessen",
+  "ateItems": "{itemname} {count} Artikel gegessen.",
+  "@ateItems": {
+          "placeholders": {
+              "itemname": {
+                  "type": "String"
+                  },
+              "count":{
+                  "type":"int"
+              }
+          }
+        },
+  "fill": "Auffüllen",
+  "howMuchToFill": "Wie viele möchten Sie auffüllen?",
+  "expirationDate": "Ablaufdatum: ",
+  "cancel": "Abbrechen",
+  "putInFridge": "In den Kühlschrank legen",
+  "filledItems": "{itemname} {count} Artikel aufgefüllt.",
+  "@filledItems": {
+    "placeholders": {
+        "itemname": {
+            "type": "String"
+        },
+        "count": {
+            "type":"int"
+        }
+    }
+  },
+  "needToBuy": "Zu kaufen: {count}",
+  "myFridge": "Mein Kühlschrank",
+  "manageFrequentItems": "Häufig verwendete Artikel verwalten",
+  "discardHistory": "Entsorgungsverlauf",
+  "manageCategories": "Kategorien verwalten",
+  "checkInviteCode": "Einladungscode prüfen",
+  "renameFridge": "Kühlschrank umbenennen",
+  "all": "Alle",
+  "errorOccurred": "Ein Fehler ist aufgetreten",
+  "enterItemName": "Bitte einen Artikelnamen eingeben!",
+  "selectCategory": "Bitte eine Kategorie auswählen!",
+  "familyInviteCode": "Familien-Einladungscode",
+  "added": "Hinzugefügt",
+  "alreadySaved": "Bereits gespeichert",
+  "undoWithSpace": "Rückgängig",
+  "fillFridgePlus": "Kühlschrank auffüllen +",
+  "itemName": "Artikelname",
+  "itemNameExample": "z. B. Apfel, Tofu",
+  "error": "Fehler",
+  "noCategories": "Es gibt keine Kategorien.",
+  "category": "Kategorie",
+  "chooseCategory": "Kategorie auswählen",
+  "storageLocation": "Lagerort",
+  "storageLocationOptions": "Kühlschrank, Gefrierschrank, Vorratskammer",
+  "quantity": "Menge",
+  "expiryAutoCalculated": "Ablaufdatum (automatisch berechnet)",
+  "addToFavorites": "Diesen Artikel zu Favoriten hinzufügen",
+  "defaultExpiryDays": "Standardhaltbarkeit (Tage)",
+  "addNewCategory": "Neue Kategorie hinzufügen",
+  "nameExampleSnack": "Name (z. B. Snack)",
+  "categoryAdded": "Kategorie hinzugefügt.",
+  "editCategory": "Kategorie bearbeiten",
+  "name": "Name",
+  "editComplete": "Bearbeitung abgeschlossen",
+  "updated": "Aktualisiert.",
+  "fillDefaultCategories": "Standardkategorien hinzufügen",
+  "refresh": "Aktualisieren!",
+  "addDefaultCategoriesHint": "Drücke den oberen Button, um Standardkategorien hinzuzufügen!",
+  "defaultExpiryShort": "Standardhaltbarkeit: {days} Tage",
+  "categoryDeleted": "Kategorie gelöscht.",
+  "favorites": "Favoriten",
+  "noFavoriteItems": "Es gibt keine Favoriten.",
+  "checkStarWhenAdding": "Versuche beim Hinzufügen eines Artikels den Stern zu markieren!",
+  "deleteFavorite": "Favorit löschen",
+  "deleteFavoriteConfirm": "Möchten Sie {item} aus der Liste der häufig verwendeten Artikel entfernen? (Der Stern bei Artikeln im Kühlschrank wird ebenfalls entfernt.)",
+  "delete": "Löschen",
+  "deleted": "Gelöscht.",
+  "touchFridgeToOpen": "Tippe auf den Kühlschrank, um ihn zu öffnen",
+  "expiringSoon": "Bald ablaufend!",
+  "exitOptions": "Beenden-Optionen",
+  "loginFailed": "Anmeldung fehlgeschlagen",
+  "errorMessage": "Ein Fehler ist aufgetreten.",
+  "enterCode": "Bitte Code eingeben",
+  "invalidCode": "Ungültiger Code.",
+  "fridgeAdmin": "Kühlschrank-Administrator",
+  "createNewFridge": "Neuen Kühlschrank erstellen",
+  "or": "oder",
+  "enterWithInviteCode": "Mit Einladungscode beitreten",
+  "inviteCode6Digits": "6-stelliger Einladungscode",
+  "inviteCodeExample": "z. B. abcdef",
+  "settingsAndExit": "Einstellungen und Beenden",
+  "logout": "Abmelden",
+  "returnToHome": "Sie kehren zum Startbildschirm zurück",
+  "deleteFridge": "Kühlschrank löschen",
+  "allDataDeletedPermanently": "Alle Daten werden dauerhaft gelöscht.",
+  "confirmDelete": "Möchten Sie wirklich löschen?",
+  "deleteFridgeWarning": "Alle Kühlschrankdaten werden gelöscht und können nicht wiederhergestellt werden.",
+  "deleteAndExit": "Löschen und Beenden",
+  "fridgeDeleted": "Der Kühlschrank wurde gelöscht.",
+  "languageSettings": "Spracheinstellungen",
+  "enterNewName": "Gib einen neuen Namen ein",
+  "change": "Ändern",
+  "editItemInfo": "Artikelinformationen bearbeiten",
+  "itemName": "Artikelname",
+  "successInfoEdit": "Informationen wurden erfolgreich aktualisiert",
+  "save": "Speichern",
+  "left": "{itemname} {count} stück übrig",
+  "@left": {
+        "placeholders": {
+        "itemname": {
+                "type": "String"
+              },
+        "count": {
+          "type": "int"
+          }
+        }
+  },
+  "total": "total ({count})",
+  "@total": {
+    "placeholders": {
+        "count": {
+            "type": "int"
+            }
+        }
+    },
+  "shareCode": "Teile diesen Code mit deiner Familie",
+  "close": "Schließen",
+  "itemfill": "{itemname} auffüllen",
+  "@itemfill": {
+      "placeholders": {
+          "itemname": {
+              "type": "String"
+          }
+      }
+  },
+  "daycount": "{count} days",
+    "@daycount": {
+      "placeholders":{
+          "count": {
+              "type": "int"
+          }
+      }
+    },
+  "allEat": "aufessen",
+  "markAllAsEatenDescription": "Alle {quantity} Stück werden als gegessen markiert.",
+  "@markAllAsEatenDescription": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "markAllAsDiscardedDescription": "Alle {quantity} Stück werden als entsorgt markiert.",
+  "@markAllAsDiscardedDescription": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+
+  "markAllAsEaten": "Alles essen",
+  "markAllAsDiscarded": "Alles entsorgen",
+  "deleteCompletelyFromFridge": "Vollständig aus dem Kühlschrank löschen",
+  "processCompleted": "Vorgang abgeschlossen",
+
+  "expiryUntil": "Bis {date}",
+  "@expiryUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "categoryWithEmoji": "{emoji} {category}",
+  "@categoryWithEmoji": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+
+  "emptyState": "Es ist leer!",
+  "expand": "Mehr anzeigen",
+  "totalItemsSummary": "Insg.{totalQty} Stück ({typeCount} Ablauf)",
+  "@totalItemsSummary": {
+    "placeholders": {
+      "totalQty": {
+        "type": "int"
+      },
+      "typeCount": {
+        "type": "int"
+      }
+    }
+  },
+  "addedWithNewExpiry": "{count} {itemName} wurden mit neuem Ablaufdatum hinzugefügt! 🎉",
+  "@addedWithNewExpiry": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "itemWithQuantity": "{itemName} ({quantity})",
+  "@itemWithQuantity": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "quantities": "{qty} stück",
+  "@quantities": {
+    "placeholders": {
+        "qty": {
+            "type": "int"
+        }
+    }
+  },
+  "put": "Hinzufügen",
+  "permanentDelete": "Endgültig löschen",
+
+  "confirmDeleteSelected": "Möchten Sie die ausgewählten {count} Elemente endgültig löschen?\nDiese Aktion kann nicht rückgängig gemacht werden.",
+  "@confirmDeleteSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "emptyTrash": "Papierkorb leeren",
+
+  "confirmEmptyTrash": "Möchten Sie alle Elemente im Papierkorb ({count}) endgültig löschen?",
+  "@confirmEmptyTrash": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "emptyAll": "Alles leeren",
+
+  "trashCleaned": "Der Papierkorb wurde erfolgreich geleert ✨",
+
+  "selectedCount": "{count} ausgewählt",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "trashTitle": "Papierkorb 🗑️",
+
+  "restoreSelected": "Ausgewählte wiederherstellen",
+  "deleteSelectedPermanently": "Ausgewählte endgültig löschen",
+
+  "trashEmpty": "Der Papierkorb ist leer.",
+
+  "discardedItemInfo": "Entsorgt: {quantity}  |  Ablaufdatum: {date}",
+  "@discardedItemInfo": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "whatToDoWithItem": "Was möchten Sie mit diesem Artikel tun?",
+
+  "restore": "Wiederherstellen",
+
+  "restoredToFridge": "In den Kühlschrank wiederhergestellt ♻️",
+  "restoreCompleted": "{count} Elemente wiederhergestellt! Schau in deinen Kühlschrank ♻️",
+  "@restoreCompleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentDeleteCompleted": "{count} Elemente endgültig gelöscht 🗑️",
+  "@permanentDeleteCompleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentDeleted": "Endgültig gelöscht.",
+  "countItems": "{count} Stück",
+  "@countItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

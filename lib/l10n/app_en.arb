@@ -1,0 +1,367 @@
+{
+  "daysExpired": "{days} days expired",
+  "@daysExpired": {
+        "placeholders": {
+          "days": {
+            "type": "int"
+          }
+        }
+      },
+  "today": "today",
+  "daysLeft": "{days} days left",
+  "@daysLeft": {
+          "placeholders": {
+            "days": {
+              "type": "int"
+            }
+          }
+        },
+  "storageFridge": "Fridge",
+  "storageFreezer": "Freezer",
+  "storagePantry": "Pantry",
+  "ateOne": "Ate 1 item",
+  "discardedOne":"Discarded 1 item",
+  "undoDiscardFromHistory": "To undo a discard, restore it from discard history",
+  "undo": "Undo",
+  "toggleFavorite": "Set/Unset favorite",
+  "selectQuantityAndDate": "Please select quantity and date",
+  "days": "Days",
+  "day": "day",
+  "editCurrentItemDateOnly": "Change expiration date only",
+  "expiryUpdated": "Expiration date updated!",
+  "addAsNewExpiryItem": "Add expiring item",
+  "addedAsNewExpiryItem": "{count} items added with a new expiration date.",
+  "add": "Add",
+  "addedItems": "{count} items added.",
+  "@addedItems": {
+      "placeholders": {
+        "itemname": {
+          "type": "String"
+                  },
+        "count":{
+          "type":"int"
+          }
+      }
+    },
+  "discard": "Discard",
+  "discardedItems": "{itemname} {count} items discarded.",
+  "@discardedItems": {
+        "placeholders": {
+            "itemname": {
+                "type": "String"
+                },
+            "count":{
+                "type":"int"
+            }
+        }
+      },
+  "eat": "Eat",
+  "ateItems": "{itemname} {count} items eaten.",
+  "@ateItems": {
+          "placeholders": {
+              "itemname": {
+                  "type": "String"
+                  },
+              "count":{
+                  "type":"int"
+              }
+          }
+        },
+  "fill": "Fill",
+  "howMuchToFill": "How many would you like to fill?",
+  "expirationDate": "Expiration date: ",
+  "cancel": "Cancel",
+  "putInFridge": "Put in fridge",
+  "filledItems": "{itemname} {count} items filled.",
+  "@filledItems": {
+    "placeholders": {
+        "itemname": {
+            "type": "String"
+        },
+        "count": {
+            "type":"int"
+        }
+    }
+  },
+  "needToBuy": "Need to buy: {count}",
+  "myFridge": "My Fridge",
+  "manageFrequentItems": "Manage frequently used items",
+  "discardHistory": "Discard history",
+  "manageCategories": "Manage categories",
+  "checkInviteCode": "Check invite code",
+  "renameFridge": "Rename fridge",
+  "all": "All",
+  "errorOccurred": "An error occurred",
+  "enterItemName": "Please enter an item name!",
+  "selectCategory": "Please select a category!",
+  "familyInviteCode": "Family invite code",
+  "added": "Added",
+  "alreadySaved": "Already saved",
+  "undoWithSpace": "Undo",
+  "fillFridgePlus": "Fill fridge +",
+  "itemName": "Item name",
+  "itemNameExample": "e.g. apple, tofu",
+  "error": "Error",
+  "noCategories": "There are no categories.",
+  "category": "Category",
+  "chooseCategory": "Choose a category",
+  "storageLocation": "Storage location",
+  "storageLocationOptions": "Fridge, Freezer, Pantry",
+  "quantity": "Quantity",
+  "expiryAutoCalculated": "Expiration date (calculated automatically)",
+  "addToFavorites": "Add this item to favorites",
+  "defaultExpiryDays": "Default expiration period (days)",
+  "addNewCategory": "Add new category",
+  "nameExampleSnack": "Name (e.g. Snack)",
+  "categoryAdded": "Category added.",
+  "editCategory": "Edit category",
+  "name": "Name",
+  "editComplete": "Edit complete",
+  "updated": "Updated.",
+  "fillDefaultCategories": "Add default categories",
+  "refresh": "Refresh!",
+  "addDefaultCategoriesHint": "Press the top button to add default categories!",
+  "defaultExpiryShort": "Default expiration: {days} days",
+  "categoryDeleted": "Category deleted.",
+  "favorites": "Favorites",
+  "noFavoriteItems": "There are no favorite items.",
+  "checkStarWhenAdding": "Try checking the star when adding an item!",
+  "deleteFavorite": "Delete favorite",
+  "deleteFavoriteConfirm": "Do you want to remove {item} from the frequently used list? (The star on items in the fridge will also be removed.)",
+  "delete": "Delete",
+  "deleted": "Deleted.",
+  "touchFridgeToOpen": "Touch the fridge to open it",
+  "expiringSoon": "Expiring soon!",
+  "exitOptions": "Exit options",
+  "loginFailed": "Login failed",
+  "errorMessage": "An error has occurred.",
+  "enterCode": "Please enter the code",
+  "invalidCode": "Invalid code.",
+  "fridgeAdmin": "My Fridge Admin",
+  "createNewFridge": "Create new fridge",
+  "or": "or",
+  "enterWithInviteCode": "Enter with invite code",
+  "inviteCode6Digits": "6-digit invite code",
+  "inviteCodeExample": "e.g. abcdef",
+  "settingsAndExit": "Settings and Exit",
+  "logout": "Log out",
+  "returnToHome": "You will return to the home screen",
+  "deleteFridge": "Delete fridge",
+  "allDataDeletedPermanently": "All data will be permanently deleted.",
+  "confirmDelete": "Are you sure you want to delete it?",
+  "deleteFridgeWarning": "All fridge information will be deleted and cannot be recovered.",
+  "deleteAndExit": "Delete and Exit",
+  "fridgeDeleted": "The fridge has been deleted.",
+  "languageSettings": "Language Setting",
+  "enterNewName": "Enter a new name",
+  "change": "Change",
+  "editItemInfo": "Edit item information",
+  "itemName": "Item name",
+  "successInfoEdit": "Information has been successfully updated",
+  "save": "Save",
+  "left": "{itemname} {count} left",
+      "@left": {
+              "placeholders": {
+              "itemname": {
+                      "type": "String"
+                    },
+              "count": {
+                "type": "int"
+                }
+              }
+        },
+  "total": "total ({count})",
+  "@total": {
+    "placeholders": {
+        "count": {
+            "type": "int"
+            }
+        }
+  },
+  "shareCode": "Share this code with your family",
+  "close": "close",
+  "itemfill": "{itemname} fill",
+    "@itemfill": {
+      "placeholders": {
+          "itemname": {
+              "type": "String"
+          }
+      }
+    },
+  "daycount": "{count} days",
+    "@daycount": {
+      "placeholders":{
+          "count": {
+              "type": "int"
+          }
+      }
+    },
+  "allEat": "all eat",
+  "markAllAsEatenDescription": "This will mark all {quantity} items as eaten.",
+  "@markAllAsEatenDescription": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "markAllAsDiscardedDescription": "This will mark all {quantity} items as discarded.",
+  "@markAllAsDiscardedDescription": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "markAllAsEaten": "Eat all",
+  "markAllAsDiscarded": "Discard all",
+  "deleteCompletelyFromFridge": "Delete completely from fridge",
+  "processCompleted": "Processing completed",
+  "expiryUntil": "Until {date}",
+  "@expiryUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryWithEmoji": "{emoji} {category}",
+  "@categoryWithEmoji": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyState": "It's empty!",
+  "expand": "Show more",
+  "totalItemsSummary": "{totalQty} items ({typeCount} expiration)",
+    "@totalItemsSummary": {
+        "placeholders": {
+        "totalQty": {
+            "type": "int"
+            },
+        "typeCount": {
+            "type": "int"
+            }
+        }
+    },
+  "addedWithNewExpiry": "{count} {itemName} items have been added with a new expiration date! 🎉",
+  "@addedWithNewExpiry": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "itemWithQuantity": "{itemName} ({quantity})",
+  "@itemWithQuantity": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "quantities": "{qty} items",
+  "@quantities": {
+    "placeholders": {
+        "qty": {
+            "type": "int"
+        }
+    }
+  },
+  "put": "Add",
+  "permanentDelete": "Delete permanently",
+
+  "confirmDeleteSelected": "Do you want to permanently delete the selected {count} items?\nThis action cannot be undone.",
+  "@confirmDeleteSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "emptyTrash": "Empty trash",
+
+  "confirmEmptyTrash": "Do you want to permanently delete all items in the trash ({count})?",
+  "@confirmEmptyTrash": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "emptyAll": "Empty all",
+
+  "trashCleaned": "Trash has been cleaned up ✨",
+
+  "selectedCount": "{count} selected",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "trashTitle": "Trash 🗑️",
+
+  "restoreSelected": "Restore selected",
+  "deleteSelectedPermanently": "Delete selected permanently",
+
+  "trashEmpty": "The trash is empty.",
+
+  "discardedItemInfo": "Discarded: {quantity}  |  Expiration date: {date}",
+  "@discardedItemInfo": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "whatToDoWithItem": "What would you like to do with this item?",
+
+  "restore": "Restore",
+
+  "restoredToFridge": "Restored to the fridge ♻️",
+  "restoreCompleted": "{count} items restored! Check your fridge ♻️",
+  "@restoreCompleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentDeleteCompleted": "{count} items permanently deleted 🗑️",
+  "@permanentDeleteCompleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentDeleted": "Permanently deleted.",
+  "countItems": "{count} items",
+  "@countItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

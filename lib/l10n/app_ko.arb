@@ -1,0 +1,365 @@
+{
+  "daysExpired": "{days}일 지남",
+  "@daysExpired": {
+      "placeholders": {
+        "days": {
+          "type": "int"
+        }
+      }
+    },
+  "today": "오늘까지",
+  "daysLeft": "{days}일 남음",
+  "@daysLeft": {
+        "placeholders": {
+          "days": {
+            "type": "int"
+          }
+        }
+      },
+  "storageFridge": "냉장",
+  "storageFreezer": "냉동",
+  "storagePantry": "펜트리",
+  "ateOne": "1개를 먹었습니다",
+  "discardedOne":" 1개를 버렸습니다",
+  "undoDiscardFromHistory": "버림 취소는 버린내역에서 복구해주세요",
+  "undo": "실행취소",
+  "toggleFavorite": "즐겨찾기 설정/해제",
+  "selectQuantityAndDate": "수량과 날짜를 선택해주세요",
+  "days": "일수",
+  "day": "일",
+  "editCurrentItemDateOnly": "현재 아이템 날짜만 수정",
+  "expiryUpdated": "유통기한 수정 완료!",
+  "addAsNewExpiryItem": "새 유통기한 항목으로 추가",
+  "addedAsNewExpiryItem": "{count}개가 새 유통기한으로 추가되었습니다.",
+  "add": "추가",
+  "addedItems": "{itemname} {count}개를 추가했습니다.",
+  "@addedItems": {
+    "placeholders": {
+        "itemname": {
+            "type": "String"
+            },
+        "count":{
+            "type":"int"
+        }
+    }
+  },
+  "discard": "버림",
+  "discardedItems": "{itemname} {count}개를 버렸습니다.",
+  "@discardedItems": {
+      "placeholders": {
+          "itemname": {
+              "type": "String"
+              },
+          "count":{
+              "type":"int"
+          }
+      }
+    },
+  "eat": "먹음",
+  "ateItems": "{itemname} {count}개를 먹었습니다.",
+  "@ateItems": {
+        "placeholders": {
+            "itemname": {
+                "type": "String"
+                },
+            "count":{
+                "type":"int"
+            }
+        }
+      },
+  "fill": "채우기",
+  "howMuchToFill": "얼마나 채울까요?",
+  "expirationDate": "유통기한: ",
+  "cancel": "취소",
+  "putInFridge": "냉장고에 넣기",
+  "filledItems": "{itemname} {count}개 채워졌습니다",
+  "@filledItems": {
+    "placeholders": {
+        "itemname": {
+            "type": "String"
+        },
+        "count": {
+            "type":"int"
+        }
+    }
+  },
+  "needToBuy": "구매필요: {count}개",
+  "myFridge": "우리집 냉장고",
+  "manageFrequentItems": "자주 쓰는 항목 관리",
+  "discardHistory": "버린내역",
+  "manageCategories": "카테고리 관리",
+  "checkInviteCode": "초대 코드 확인",
+  "renameFridge": "냉장고 이름 변경",
+  "all": "전체",
+  "errorOccurred": "에러 발생",
+  "enterItemName": "재료 이름을 입력해주세요!",
+  "selectCategory": "카테고리를 선택해주세요!",
+  "familyInviteCode": "가족 초대 코드",
+  "added": "추가됨",
+  "alreadySaved": "이미 저장되었습니다",
+  "undoWithSpace": "실행 취소",
+  "fillFridgePlus": "냉장고 채우기 +",
+  "itemName": "재료 이름",
+  "itemNameExample": "예: 사과, 두부",
+  "error": "에러",
+  "noCategories": "카테고리가 없습니다.",
+  "category": "카테고리",
+  "chooseCategory": "카테고리를 선택하세요",
+  "storageLocation": "보관위치",
+  "storageLocationOptions": "냉장, 냉동, 펜트리",
+  "quantity": "수량",
+  "expiryAutoCalculated": "유통기한 (자동 계산됨)",
+  "addToFavorites": "이 항목을 즐겨찾기에 추가",
+  "defaultExpiryDays": "기본 유통기한 (일)",
+  "addNewCategory": "새 카테고리 추가",
+  "nameExampleSnack": "이름 (예: 간식)",
+  "categoryAdded": "카테고리를 추가했습니다.",
+  "editCategory": "카테고리 수정",
+  "name": "이름",
+  "editComplete": "수정 완료",
+  "updated": "수정되었습니다.",
+  "fillDefaultCategories": "기본 카테고리 채우기",
+  "refresh": "새로고침!",
+  "addDefaultCategoriesHint": "상단 버튼을 눌러 기본 카테고리를 추가해보세요!",
+  "defaultExpiryShort": "기본 유통기한 {days}일",
+  "categoryDeleted": "카테고리를 삭제했습니다.",
+  "favorites": "즐겨찾기",
+  "noFavoriteItems": "즐겨찾는 재료가 없습니다.",
+  "checkStarWhenAdding": "아이템 추가 시 별을 체크해보세요!",
+  "deleteFavorite": "즐겨찾기 삭제",
+  "deleteFavoriteConfirm": "{item}을(를) 자주 쓰는 목록에서 지우시겠습니까? (냉장고에 있는 아이템의 별표도 해제됩니다)",
+  "delete": "삭제",
+  "deleted": "삭제되었습니다.",
+  "touchFridgeToOpen": "냉장고를 터치해서 열어보세요",
+  "expiringSoon": "유통기한 임박!",
+  "exitOptions": "나가기 옵션",
+  "loginFailed": "로그인에 실패했습니다",
+  "errorMessage": "오류가 발생했습니다.",
+  "enterCode": "코드를 입력해주세요",
+  "invalidCode": "올바르지 않은 코드입니다.",
+  "fridgeAdmin": "우리집 냉장고 관리자",
+  "createNewFridge": "새 냉장고 만들기",
+  "or": "또는",
+  "enterWithInviteCode": "초대 코드로 냉장고 열기",
+  "inviteCode6Digits": "초대 코드 6자리",
+  "inviteCodeExample": "예: abcdef",
+  "settingsAndExit": "설정 및 나가기",
+  "logout": "로그아웃",
+  "returnToHome": "초기화면으로 돌아갑니다",
+  "deleteFridge": "냉장고 삭제하기",
+  "allDataDeletedPermanently": "모든 데이터가 영구적으로 삭제됩니다.",
+  "confirmDelete": "정말 삭제하시겠습니까?",
+  "deleteFridgeWarning": "냉장고 정보가 모두 사라지며 복구할 수 없습니다.",
+  "deleteAndExit": "삭제 및 나가기",
+  "fridgeDeleted": "냉장고가 삭제되었습니다.",
+  "languageSettings": "언어 설정",
+  "enterNewName":"새로운 이름을 입력하세요",
+  "change":"변경",
+  "editItemInfo": "아이템 정보 수정",
+  "itemName": "아이템 이름",
+  "successInfoEdit":"정보가 성공적으로 수정되었습니다",
+  "save": "저장",
+  "left": "{itemname} {count}개 남음",
+  "@left": {
+    "placeholders": {
+        "itemname": {
+                "type": "String"
+              },
+        "count": {
+          "type": "int"
+          }
+        }
+  },
+  "total": "전체 ({count}개)",
+  "@total": {
+    "placeholders": {
+        "count": {
+            "type": "int"
+            }
+    }
+  },
+  "shareCode": "이 코드를 가족과 공유하세요",
+  "close": "닫기",
+  "itemfill": "{itemname} 채우기",
+  "@itemfill": {
+    "placeholders": {
+        "itemname": {
+            "type": "String"
+        }
+    }
+  },
+  "daycount": "{count} days",
+  "@daycount": {
+    "placeholders":{
+        "count": {
+            "type": "int"
+        }
+    }
+  },
+  "allEat": "전체 먹음",
+  "markAllAsEatenDescription": "{quantity}개를 모두 먹은 것으로 처리합니다.",
+  "@markAllAsEatenDescription": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "markAllAsDiscardedDescription": "{quantity}개를 모두 버린 것으로 처리합니다.",
+  "@markAllAsDiscardedDescription": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "markAllAsEaten": "전체 먹음",
+  "markAllAsDiscarded": "전체 버림",
+  "deleteCompletelyFromFridge": "냉장고에서 완전 삭제",
+  "processCompleted": "처리가 완료되었습니다",
+  "expiryUntil": "{date} 까지",
+  "@expiryUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryWithEmoji": "{emoji} {category}",
+  "@categoryWithEmoji": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyState": "비어있어요!",
+  "expand": "펼쳐보기",
+  "totalItemsSummary": "총 {totalQty}개 (기한 {typeCount}종류)",
+  "@totalItemsSummary": {
+    "placeholders": {
+      "totalQty": {
+        "type": "int"
+      },
+      "typeCount": {
+        "type": "int"
+      }
+    }
+  },
+  "addedWithNewExpiry": "{itemName} {count}개가 새 유통기한으로 추가되었습니다! 🎉",
+  "@addedWithNewExpiry": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "itemWithQuantity": "{itemName} ({quantity}개)",
+  "@itemWithQuantity": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "quantities": "{qty} 개",
+  "@quantities": {
+    "placeholders": {
+        "qty": {
+            "type": "int"
+        }
+    }
+  },
+  "put": "넣기",
+  "permanentDelete": "영구 삭제",
+
+  "confirmDeleteSelected": "선택한 {count}개를 완전히 삭제하시겠습니까?\n이 작업은 복구할 수 없습니다.",
+  "@confirmDeleteSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "emptyTrash": "휴지통 비우기",
+
+  "confirmEmptyTrash": "휴지통에 있는 모든 항목({count}개)을 영구 삭제하시겠습니까?",
+  "@confirmEmptyTrash": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "emptyAll": "전체 비우기",
+
+  "trashCleaned": "휴지통을 깔끔하게 비웠습니다 ✨",
+
+  "selectedCount": "{count}개 선택됨",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "trashTitle": "휴지통 🗑️",
+
+  "restoreSelected": "선택 항목 복구",
+  "deleteSelectedPermanently": "선택 항목 영구 삭제",
+
+  "trashEmpty": "휴지통이 비어있습니다.",
+
+  "discardedItemInfo": "버린 개수: {quantity}개  |  유통기한: {date}",
+  "@discardedItemInfo": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "whatToDoWithItem": "이 아이템을 어떻게 할까요?",
+  "restore": "복구",
+  "restoredToFridge": "냉장고로 복구되었습니다 ♻️",
+  "restoreCompleted": "{count}개 복구 완료! 냉장고를 확인하세요 ♻️",
+  "@restoreCompleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentDeleteCompleted": "{count}개가 영구 삭제되었습니다 🗑️",
+  "@permanentDeleteCompleted": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "permanentDeleted": "영구 삭제되었습니다.",
+  "countItems": "{count}개",
+  "@countItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}
