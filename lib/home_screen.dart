@@ -1,5 +1,3 @@
-// lib/home_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +11,7 @@ import 'notification_service.dart';
 import 'l10n/app_localizations.dart';
 import 'locale_provider.dart';
 import 'package:provider/provider.dart';
+import 'utils.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -46,9 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
   // 보관 위치별 뱃지 색상 및 텍스트 색상
   Color _getLocationColor(String location) {
     switch (location) {
-      case '냉장': return Colors.cyan[100]!; // 연한 파랑
-      case '냉동': return Colors.blue[100]!; // 연한 하늘색
-      case '펜트리': return Colors.orange[100]!; // 연한 주황
+      case '냉장': return Colors.cyan[100]!;
+      case '냉동': return Colors.blue[100]!;
+      case '팬트리': return Colors.orange[100]!;
       default: return Colors.grey[200]!;
     }
   }
@@ -57,33 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (location) {
       case '냉장': return Colors.cyan[800]!;
       case '냉동': return Colors.blue[800]!;
-      case '펜트리': return Colors.brown[600]!;
+      case '팬트리': return Colors.brown[600]!;
       default: return Colors.black54;
     }
-  }
-
-  // 카테고리 이모지
-  Widget _getCategoryEmoji(String name) {
-    String emoji = '🏷️';
-    String lowerName = name.toLowerCase();
-    if (lowerName.contains('즐겨찾기')) emoji = '⭐';
-    else if (lowerName.contains('육류') || lowerName.contains('고기') || lowerName.contains('meat')) emoji = '🥩';
-    else if (lowerName.contains('치즈') || lowerName.contains('cheese')) emoji = '🧀';
-    else if (lowerName.contains('유제품') || lowerName.contains('우유') || lowerName.contains('dairy') || lowerName.contains('milk')) emoji = '🥛';
-    else if (lowerName.contains('야채') || lowerName.contains('채소') || lowerName.contains('vegetable') || lowerName.contains('veggie')) emoji = '🥦';
-    else if (lowerName.contains('과일') || lowerName.contains('fruit')) emoji = '🍎';
-    else if (lowerName.contains('냉동') || lowerName.contains('아이스크림')) emoji = '❄️';
-    else if (lowerName.contains('음료') || lowerName.contains('beverage') || lowerName.contains('drink')) emoji = '🥤';
-    else if (lowerName.contains('빵') || lowerName.contains('떡') || lowerName.contains('bakery')) emoji = '🍞';
-    else if (lowerName.contains('생선') || lowerName.contains('해산물') || lowerName.contains('fish')) emoji = '🐟';
-    else if (lowerName.contains('소스') || lowerName.contains('양념') || lowerName.contains('sauce')) emoji = '🥫';
-    else if (lowerName.contains('즉석') || lowerName.contains('라면') || lowerName.contains('noodle')) emoji = '🍜';
-
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(color: Colors.grey[100], shape: BoxShape.circle),
-      child: Text(emoji, style: TextStyle(fontSize: 20)),
-    );
   }
 
   void _showLanguageDialog(BuildContext context) {
@@ -234,10 +209,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             labelText: AppLocalizations.of(context)!.storageLocation,
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                           ),
-                          items: safeLocations.map((loc) => DropdownMenuItem(
-                              value: loc,
-                              child: Text(loc, style: TextStyle(fontFamily: 'KidariFont', fontSize: 16))
-                          )).toList(),
+                          items: [
+                            {'dbValue': '냉장', 'label': AppLocalizations.of(context)!.storageFridge},
+                            {'dbValue': '냉동', 'label': AppLocalizations.of(context)!.storageFreezer},
+                            {'dbValue': '펜트리', 'label': AppLocalizations.of(context)!.storagePantry},
+                          ].map((item) {
+                            return DropdownMenuItem<String>(
+                              value: item['dbValue'], // 드롭다운 내부 값은 한국어 고정 (에러 방지)
+                              child: Text(item['label']!, style: TextStyle(fontFamily: 'KidariFont')), // 화면에는 번역 표시
+                            );
+                          }).toList(),
                           onChanged: (val) {
                             if (val != null) setState(() => selectedLocation = val);
                           },
@@ -325,15 +306,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () async {
                             Navigator.pop(dialogContext); // 현재 팝업 닫기
 
-                            // 1. 장소 리스트는 탭에 맞춰서 고정!
+                            // 장소 리스트는 탭에 맞춰서 고정
                             List<String> dbLocations = [AppLocalizations.of(context)!.storageFridge, AppLocalizations.of(context)!.storageFreezer, AppLocalizations.of(context)!.storagePantry];
 
-                            // 2. DB에서 유저가 만든 최신 카테고리 이름만 쏙 뽑아옵니다!
+                            // DB에서 유저가 만든 최신 카테고리 이름만 쏙 뽑아옵니다
                             List<String> dbCategories = await _service.getCategoryNames();
 
                             // 만약 DB에서 가져온 게 아무것도 없다면(초기 에러 등) 기본값 사용
                             if (dbCategories.isEmpty) {
-                              dbCategories = ['채소', '과일', '육류', '수산물', '유제품', '가공식품', '음료', '조미료', '기타'];
+                              dbCategories = ['채소', '과일', '육류', '수산물', '유제품', '즉석', '음료', '조미료', '기타'];
                             }
 
                             if (!mainContext.mounted) return;
@@ -959,7 +940,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           if (!isSubItem) SizedBox(width: 8),
 
-          // ★ [신규] 즐겨찾기 상태일 때만 '카테고리 뱃지' 추가!
+          // 즐겨찾기 상태일 때만 '카테고리 뱃지' 추가
           if (!isSubItem && item.isFavorite)
             Container(
               margin: EdgeInsets.only(right: 4),
@@ -979,7 +960,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(color: _getLocationColor(item.storageLocation), borderRadius: BorderRadius.circular(6)),
-              child: Text(item.storageLocation, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: _getLocationTextColor(item.storageLocation), fontFamily: 'KidariFont')),
+              child: Text(
+                // ★ 여기서 번역 함수를 호출!
+                  translateLocation(item.storageLocation, context),
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: _getLocationTextColor(item.storageLocation),
+                      fontFamily: 'KidariFont'
+                  )
+              ),
             ),
         ],
       ),
@@ -1071,7 +1061,6 @@ class _HomeScreenState extends State<HomeScreen> {
         Map<String, List<FridgeItem>> itemsBySubGroup = {};
         for (var item in categoryItems) {
           // ★ [핵심] 3가지 속성을 합쳐서 고유 키(고유 이름표)를 만듭니다.
-          // (예: "동원참치_가공식품_펜트리", "동원참치_가공식품_냉장")
           String uniqueKey = "${item.name}_${item.category}_${item.storageLocation}";
 
           if (!itemsBySubGroup.containsKey(uniqueKey)) {
@@ -1087,9 +1076,20 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
               child: Row(
                 children: [
-                  _getCategoryEmoji(categoryKey),
+                  // 원래 디자인 복구 ✅
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(color: Colors.grey[100], shape: BoxShape.circle),
+                    child: Text(
+                      getCategoryEmoji(categoryKey), // utils.dart의 함수 사용 (문자열 반환)
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
                   SizedBox(width: 10),
-                  Text(categoryKey, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87, fontFamily: 'KidariFont')),
+                  Text(
+                    translateCategory(categoryKey, context),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87, fontFamily: 'KidariFont'),
+                  ),
                 ],
               ),
             ),
@@ -1145,7 +1145,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               margin: EdgeInsets.only(right: 4),
                               padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(6)),
-                              child: Text("${_getCategorySimpleEmoji(earliestItem.category)} ${earliestItem.category}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87, fontFamily: 'KidariFont')),
+                              child: Text(
+                                // getCategorySimpleEmoji 대신 getCategoryEmoji 사용 ✅
+                                "${getCategoryEmoji(earliestItem.category)} ${translateCategory(earliestItem.category, context)}",
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87, fontFamily: 'KidariFont'),
+                              ),
                             ),
 
                           Container(
@@ -1351,9 +1355,9 @@ class _HomeScreenState extends State<HomeScreen> {
             return TabBarView(
               children: [
                 _buildLocationList(context, items, null),
-                _buildLocationList(context, items, AppLocalizations.of(context)!.storageFridge),
-                _buildLocationList(context, items, AppLocalizations.of(context)!.storageFreezer),
-                _buildLocationList(context, items, AppLocalizations.of(context)!.storagePantry),
+                _buildLocationList(context, items, '냉장'),
+                _buildLocationList(context, items, '냉동'),
+                _buildLocationList(context, items, '팬트리'),
               ],
             );
           },

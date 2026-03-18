@@ -75,9 +75,9 @@ class FridgeService {
       '채소': 5,
       '과일': 7,
       '해산물':3,
-      '가공식품': 180,
+      '즉석': 180,
       '음료': 180,
-      '기타': 14
+      '기타': 14,
     };
 
     // 3. 하나씩 비교해서 "없는 것만" 추가합니다.
@@ -127,7 +127,7 @@ class FridgeService {
     });
   }
 
-  // 3. 즐겨찾기 삭제
+  // 즐겨찾기 삭제
   Future<void> deleteFavorite(String docId) async {
     if (currentHouseholdId == null) return;
     await _db
@@ -140,34 +140,52 @@ class FridgeService {
 
   Future<void> deleteHousehold() async {
     if (currentHouseholdId == null) return;
+    final String householdIdToDelete = currentHouseholdId!;
 
-    // 1. 하위 컬렉션: 아이템(items) 모두 삭제
-    var itemsSnapshot = await _db.collection('households').doc(currentHouseholdId).collection('items').get();
-    for (var doc in itemsSnapshot.docs) {
-      await doc.reference.delete();
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      final String? uid = user?.uid;
+
+      // 1. [Firestore] 유저 문서 "전체" 삭제 ✅
+      // 필드만 지우는 것이 아니라 문서 자체를 날려버립니다.
+      if (uid != null) {
+        print("유저 문서 삭제 시도: $uid");
+        await _db.collection('users').doc(uid).delete();
+      }
+
+      // 2. 하위 컬렉션 삭제 (아이템 및 카테고리)
+      // (기존에 작성하신 루프 코드를 여기에 유지하세요)
+      var itemsSnapshot = await _db.collection('households').doc(householdIdToDelete).collection('items').get();
+      for (var doc in itemsSnapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      var catSnapshot = await _db.collection('households').doc(householdIdToDelete).collection('categories').get();
+      for (var doc in catSnapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      // 3. 냉장고 본체 문서 삭제
+      await _db.collection('households').doc(householdIdToDelete).delete();
+
+      // 4. 로컬 저장소(SharedPreferences) ID 삭제
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('householdId');
+
+      // 5. ★ 마지막에 로그아웃 ★ ✅
+      // 모든 DB 삭제 작업이 끝난 후 로그아웃을 해야 권한(Permission) 에러가 나지 않습니다.
+      await FirebaseAuth.instance.signOut();
+
+      currentHouseholdId = null;
+      print("✅ 유저 데이터 및 냉장고 데이터 완전 삭제 완료");
+
+    } catch (e) {
+      print("❌ 삭제 중 오류 발생: $e");
+      rethrow;
     }
-
-    // 2. 하위 컬렉션: 카테고리(categories) 모두 삭제
-    var catSnapshot = await _db.collection('households').doc(currentHouseholdId).collection('categories').get();
-    for (var doc in catSnapshot.docs) {
-      await doc.reference.delete();
-    }
-
-    // 3. 냉장고 문서(household) 자체 삭제
-    await _db.collection('households').doc(currentHouseholdId).delete();
-
-    // 4. 유저 정보에서 소속(householdId) 제거
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await _db.collection('users').doc(user.uid).update({
-        'householdId': FieldValue.delete(), // 필드 아예 삭제
-      });
-    }
-
-    // 5. 로컬 변수 초기화
-    currentHouseholdId = null;
   }
-  // 2. 냉장고 이름 수정하기
+
+  // 냉장고 이름 수정하기
   Future<void> updateFridgeName(String newName) async {
     if (currentHouseholdId == null) return;
     await _db
@@ -178,7 +196,7 @@ class FridgeService {
 
   // --- 아이템 관련 기능 ---
   Stream<List<FridgeItem>> getFridgeItems() {
-    // 1. 현재 ID가 잘 살아있는지 확인
+    // 현재 ID가 잘 살아있는지 확인
     print("📢 데이터 요청 시작! 현재 Household ID: $currentHouseholdId");
 
     if (currentHouseholdId == null) {

@@ -6,6 +6,8 @@ import 'fridge_service.dart';
 import 'home_screen.dart';
 import 'entrance_screen.dart';
 import 'l10n/app_localizations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class IntroScreen extends StatefulWidget {
 
 class _IntroScreenState extends State<IntroScreen> {
   final FridgeService _service = FridgeService();
+  String _fridgeName = "";
 
   // ★ [신규] 애니메이션을 위한 크기 변수 (1.0 = 100% 크기)
   double _scale = 1.0;
@@ -23,6 +26,28 @@ class _IntroScreenState extends State<IntroScreen> {
     super.initState();
     _prepareData();
     _syncData();
+    _loadFridgeName();
+  }
+
+  Future<void> _loadFridgeName() async {
+    // 1. 현재 사용 중인 householdId 가져오기
+    String? householdId = FridgeService().currentHouseholdId;
+
+
+    if (householdId != null) {
+      // 2. Firestore에서 해당 냉장고 문서 가져오기
+      var doc = await FirebaseFirestore.instance
+          .collection('households')
+          .doc(householdId)
+          .get();
+
+      if (doc.exists && mounted) {
+        setState(() {
+          // 3. 필드명 'name'으로 저장된 값을 변수에 할당
+          _fridgeName = doc.data()?['name'] ?? "";
+        });
+      }
+    }
   }
 
   Future<void> _prepareData() async {
@@ -176,7 +201,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                      "WooGo",
+                      _fridgeName.isEmpty ? "로딩 중..." : _fridgeName,
                       style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,

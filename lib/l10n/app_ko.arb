@@ -123,6 +123,15 @@
   "addDefaultCategoriesHint": "상단 버튼을 눌러 기본 카테고리를 추가해보세요!",
   "defaultExpiryShort": "기본 유통기한 {days}일",
   "categoryDeleted": "카테고리를 삭제했습니다.",
+  "categoryDeletedWithName": "'{categoryName}' 카테고리를 삭제했습니다.",
+  "@categoryDeletedWithName": {
+    "description": "이름을 포함한 카테고리 삭제 메시지",
+    "placeholders": {
+      "categoryName": {
+        "type": "String"
+      }
+    }
+  },
   "favorites": "즐겨찾기",
   "noFavoriteItems": "즐겨찾는 재료가 없습니다.",
   "checkStarWhenAdding": "아이템 추가 시 별을 체크해보세요!",
@@ -361,5 +370,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "categoryMeat": "육류",
+  "categoryVegetable": "채소",
+  "categoryFruit": "과일",
+  "categoryDairy": "유제품",
+  "categorySeafood": "해산물",
+  "categoryBeverage": "음료",
+  "categoryBakery": "빵",
+  "categorySauce": "조미료/소스",
+  "categoryFrozen": "냉동식품",
+  "categoryCanned": "통조림",
+  "categoryInstant": "즉석/밀키트",
+  "categoryNoodle": "면/파스타",
+  "categoryEtc": "기타",
+  "categoryFish": "생선",
+  "confirm": "확인",
+  "enterFridgeName": "냉장고 이름을 입력해주세요"
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'fridge_service.dart';
 import 'l10n/app_localizations.dart';
+import 'utils.dart';
 
 class CategorySettingsScreen extends StatefulWidget {
   @override
@@ -14,64 +15,6 @@ class _CategorySettingsScreenState extends State<CategorySettingsScreen> {
   final _service = FridgeService();
   final _nameController = TextEditingController();
   final _daysController = TextEditingController(text: "7");
-
-  // 카테고리 이름에 맞는 이모지 반환 함수
-
-  Widget _getCategoryEmoji(String name) {
-    String emoji;
-    // 영어 대소문자 구분을 없애기 위해 소문자로 변환해서 검사
-    String lowerName = name.toLowerCase();
-
-    if (lowerName.contains('육류') || lowerName.contains('고기') || lowerName.contains('meat') || lowerName.contains('beef') || lowerName.contains('pork')) {
-      emoji = '🥩';
-    }
-    // ★ [요청 3] 치즈 분리 (유제품보다 먼저 검사해야 함)
-    else if (lowerName.contains('치즈') || lowerName.contains('cheese')) {
-      emoji = '🧀';
-    }
-    else if (lowerName.contains('유제품') || lowerName.contains('우유') || lowerName.contains('dairy') || lowerName.contains('milk')) {
-      emoji = '🥛';
-    }
-    else if (lowerName.contains('야채') || lowerName.contains('채소') || lowerName.contains('vegetable') || lowerName.contains('veggie')) {
-      emoji = '🥦';
-    }
-    // ★ [요청 1] '사과' 삭제, 영어 추가
-    else if (lowerName.contains('과일') || lowerName.contains('fruit')) {
-      emoji = '🍎';
-    }
-    else if (lowerName.contains('냉동') || lowerName.contains('아이스크림') || lowerName.contains('frozen') || lowerName.contains('ice')) {
-      emoji = '❄️';
-    }
-    // ★ [요청 2] '주스', '물' 삭제, 영어 추가
-    else if (lowerName.contains('음료') || lowerName.contains('beverage') || lowerName.contains('drink')) {
-      emoji = '🥤';
-    }
-    // ★ [요청 4] 기타 카테고리 영어 추가
-    else if (lowerName.contains('빵') || lowerName.contains('떡') || lowerName.contains('베이커리') || lowerName.contains('bread') || lowerName.contains('bakery')) {
-      emoji = '🍞';
-    }
-    else if (lowerName.contains('생선') || lowerName.contains('해산물') || lowerName.contains('fish') || lowerName.contains('seafood')) {
-      emoji = '🐟';
-    }
-    else if (lowerName.contains('소스') || lowerName.contains('양념') || lowerName.contains('sauce') || lowerName.contains('condiment')) {
-      emoji = '🥫';
-    }
-    else if (lowerName.contains('즉석') || lowerName.contains('라면') || lowerName.contains('instant') || lowerName.contains('noodle')) {
-      emoji = '🍜';
-    }
-    else {
-      emoji = '🏷️'; // 매칭되는 게 없으면 기본 태그
-    }
-
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        shape: BoxShape.circle,
-      ),
-      child: Text(emoji, style: TextStyle(fontSize: 24)),
-    );
-  }
 
   // 유통기한 감소
   void _decreaseDays() {
@@ -249,20 +192,47 @@ class _CategorySettingsScreenState extends State<CategorySettingsScreen> {
               int defaultDays = data['defaultDays'];
 
               return ListTile(
-                // ★ [수정] 이모지 함수 적용
-                leading: _getCategoryEmoji(categoryName),
+                // 1. leading: 이모지 문자열을 가져와서 원형 배경 위젯으로 만듭니다. ✅
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      shape: BoxShape.circle
+                  ),
+                  child: Text(
+                    getCategoryEmoji(categoryName), // utils.dart 함수 호출
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ),
 
-                title: Text(categoryName, style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text("기본 유통기한: $defaultDays일"),
+                // 2. title: 카테고리 이름을 현재 언어 설정에 맞게 번역하여 표시합니다. ✅
+                title: Text(
+                    translateCategory(categoryName, context),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'KidariFont')
+                ),
+
+                // 3. subtitle: "기본 유통기한" 문구도 다국어 처리를 권장합니다.
+                subtitle: Text(
+                  "${AppLocalizations.of(context)!.defaultExpiryDays}: $defaultDays${AppLocalizations.of(context)!.day}",
+                  style: const TextStyle(fontFamily: 'KidariFont'),
+                ),
+
                 onTap: () {
                   _showEditDialog(docs[index].id, categoryName, defaultDays);
                 },
+
                 trailing: IconButton(
                   icon: Icon(Icons.delete, color: Colors.grey[400]),
                   onPressed: () {
                     _service.deleteCategory(docs[index].id);
+                    // 4. SnackBar 메시지도 다국어 대응 ✅
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("'$categoryName' 카테고리를 삭제했습니다.")),
+                      SnackBar(
+                          content: Text(
+                              AppLocalizations.of(context)!.categoryDeletedWithName(categoryName),
+                              style: const TextStyle(fontFamily: 'KidariFont')
+                          )
+                      ),
                     );
                   },
                 ),

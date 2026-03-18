@@ -123,6 +123,15 @@
   "addDefaultCategoriesHint": "Press the top button to add default categories!",
   "defaultExpiryShort": "Default expiration: {days} days",
   "categoryDeleted": "Category deleted.",
+  "categoryDeletedWithName": "Category '{categoryName}' has been deleted.",
+  "@categoryDeletedWithName": {
+    "description": "Delete message with category name",
+    "placeholders": {
+      "categoryName": {
+        "type": "String"
+      }
+    }
+  },
   "favorites": "Favorites",
   "noFavoriteItems": "There are no favorite items.",
   "checkStarWhenAdding": "Try checking the star when adding an item!",
@@ -363,5 +372,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "categoryMeat": "Meat",
+  "categoryVegetable": "Vegetables",
+  "categoryFruit": "Fruit",
+  "categoryDairy": "Dairy",
+  "categorySeafood": "Seafood",
+  "categoryBeverage": "Beverages",
+  "categoryBakery": "Bakery",
+  "categorySauce": "Sauces & Seasoning",
+  "categoryFrozen": "Frozen Food",
+  "categoryCanned": "Canned Food",
+  "categoryInstant": "Instant/Meal-kit",
+  "categoryNoodle": "Noodles & Pasta",
+  "categoryEtc": "Others",
+  "categoryFish": "Fish",
+  "confirm": "Confirm",
+  "enterFridgeName": "Please enter a name for the fridge"
 }

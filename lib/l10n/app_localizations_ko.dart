@@ -237,6 +237,11 @@ class AppLocalizationsKo extends AppLocalizations {
   String get categoryDeleted => '카테고리를 삭제했습니다.';
 
   @override
+  String categoryDeletedWithName(String categoryName) {
+    return '\'$categoryName\' 카테고리를 삭제했습니다.';
+  }
+
+  @override
   String get favorites => '즐겨찾기';
 
   @override
@@ -503,4 +508,52 @@ class AppLocalizationsKo extends AppLocalizations {
   String countItems(int count) {
     return '$count개';
   }
+
+  @override
+  String get categoryMeat => '육류';
+
+  @override
+  String get categoryVegetable => '채소';
+
+  @override
+  String get categoryFruit => '과일';
+
+  @override
+  String get categoryDairy => '유제품';
+
+  @override
+  String get categorySeafood => '해산물';
+
+  @override
+  String get categoryBeverage => '음료';
+
+  @override
+  String get categoryBakery => '빵';
+
+  @override
+  String get categorySauce => '조미료/소스';
+
+  @override
+  String get categoryFrozen => '냉동식품';
+
+  @override
+  String get categoryCanned => '통조림';
+
+  @override
+  String get categoryInstant => '즉석/밀키트';
+
+  @override
+  String get categoryNoodle => '면/파스타';
+
+  @override
+  String get categoryEtc => '기타';
+
+  @override
+  String get categoryFish => '생선';
+
+  @override
+  String get confirm => '확인';
+
+  @override
+  String get enterFridgeName => '냉장고 이름을 입력해주세요';
 }

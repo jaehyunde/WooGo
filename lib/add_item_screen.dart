@@ -7,6 +7,7 @@ import 'item_model.dart';
 import 'fridge_service.dart';
 import 'notification_service.dart';
 import 'l10n/app_localizations.dart';
+import 'utils.dart';
 
 class AddItemScreen extends StatefulWidget {
   final String? initialName;
@@ -76,23 +77,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
       if (daysDiff < 0) daysDiff = 0;
       _expiryDaysController.text = daysDiff.toString();
     });
-  }
-
-  Widget _getCategoryEmoji(String name) {
-    String emoji = '🏷️';
-    String lowerName = name.toLowerCase();
-    if (lowerName.contains('육류') || lowerName.contains('고기') || lowerName.contains('meat') || lowerName.contains('beef') || lowerName.contains('pork')) emoji = '🥩';
-    else if (lowerName.contains('치즈') || lowerName.contains('cheese')) emoji = '🧀';
-    else if (lowerName.contains('유제품') || lowerName.contains('우유') || lowerName.contains('dairy') || lowerName.contains('milk')) emoji = '🥛';
-    else if (lowerName.contains('야채') || lowerName.contains('채소') || lowerName.contains('vegetable') || lowerName.contains('veggie')) emoji = '🥦';
-    else if (lowerName.contains('과일') || lowerName.contains('fruit')) emoji = '🍎';
-    else if (lowerName.contains('냉동') || lowerName.contains('아이스크림') || lowerName.contains('frozen') || lowerName.contains('ice')) emoji = '❄️';
-    else if (lowerName.contains('음료') || lowerName.contains('beverage') || lowerName.contains('drink')) emoji = '🥤';
-    else if (lowerName.contains('빵') || lowerName.contains('떡') || lowerName.contains('베이커리') || lowerName.contains('bread') || lowerName.contains('bakery')) emoji = '🍞';
-    else if (lowerName.contains('생선') || lowerName.contains('해산물') || lowerName.contains('fish') || lowerName.contains('seafood')) emoji = '🐟';
-    else if (lowerName.contains('소스') || lowerName.contains('양념') || lowerName.contains('sauce') || lowerName.contains('condiment')) emoji = '🥫';
-    else if (lowerName.contains('즉석') || lowerName.contains('라면') || lowerName.contains('instant') || lowerName.contains('noodle')) emoji = '🍜';
-    return Text(emoji, style: TextStyle(fontSize: 22));
   }
 
   void _increaseQuantity() {
@@ -238,7 +222,17 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   for (var doc in snapshot.data!.docs) {
                     var data = doc.data() as Map<String, dynamic>;
                     String name = data['name'];
-                    menuItems.add(DropdownMenuItem(value: name, child: Row(children: [_getCategoryEmoji(name), SizedBox(width: 10), Text(name, style: TextStyle(fontFamily: 'KidariFont'))])));
+                    menuItems.add(DropdownMenuItem(
+                          value: name,
+                          child: Row(
+                            children: [
+                              // String을 Text 위젯으로 감싸서 전달 ✅
+                              Text(getCategoryEmoji(name), style: TextStyle(fontSize: 22)),
+                              SizedBox(width: 10),
+                              Text(translateCategory(name, context), style: TextStyle(fontFamily: 'KidariFont')),
+                            ],
+                          ),
+                        ));
                   }
 
                   if (menuItems.isEmpty) return Text(AppLocalizations.of(context)!.noCategories);
@@ -264,10 +258,25 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
               // 3. 보관 장소
               DropdownButtonFormField<String>(
-                value: _selectedLocation,
-                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.storageLocation, border: OutlineInputBorder(), prefixIcon: Icon(Icons.kitchen)),
-                items: ['냉장', '냉동', '펜트리'].map((String loc) {
-                  return DropdownMenuItem<String>(value: loc, child: Text(loc, style: TextStyle(fontFamily: 'KidariFont')));
+                value: _selectedLocation, // 내부 값은 '냉장', '냉동', '펜트리' 중 하나
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.storageLocation,
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.kitchen)
+                ),
+                // [데이터값 : 번역라벨]을 매핑하여 리스트를 생성합니다.
+                items: [
+                  {'val': '냉장', 'label': AppLocalizations.of(context)!.storageFridge},
+                  {'val': '냉동', 'label': AppLocalizations.of(context)!.storageFreezer},
+                  {'val': '펜트리', 'label': AppLocalizations.of(context)!.storagePantry},
+                ].map((item) {
+                  return DropdownMenuItem<String>(
+                    value: item['val'], // DB에 저장될 한국어 값 고정 (에러 방지 핵심)
+                    child: Text(
+                        item['label']!, // 화면에만 현재 언어로 번역되어 표시
+                        style: TextStyle(fontFamily: 'KidariFont')
+                    ),
+                  );
                 }).toList(),
                 onChanged: (val) {
                   setState(() {

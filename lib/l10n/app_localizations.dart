@@ -520,6 +520,12 @@ abstract class AppLocalizations {
   /// **'카테고리를 삭제했습니다.'**
   String get categoryDeleted;
 
+  /// 이름을 포함한 카테고리 삭제 메시지
+  ///
+  /// In ko, this message translates to:
+  /// **'\'{categoryName}\' 카테고리를 삭제했습니다.'**
+  String categoryDeletedWithName(String categoryName);
+
   /// No description provided for @favorites.
   ///
   /// In ko, this message translates to:
@@ -975,6 +981,102 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'{count}개'**
   String countItems(int count);
+
+  /// No description provided for @categoryMeat.
+  ///
+  /// In ko, this message translates to:
+  /// **'육류'**
+  String get categoryMeat;
+
+  /// No description provided for @categoryVegetable.
+  ///
+  /// In ko, this message translates to:
+  /// **'채소'**
+  String get categoryVegetable;
+
+  /// No description provided for @categoryFruit.
+  ///
+  /// In ko, this message translates to:
+  /// **'과일'**
+  String get categoryFruit;
+
+  /// No description provided for @categoryDairy.
+  ///
+  /// In ko, this message translates to:
+  /// **'유제품'**
+  String get categoryDairy;
+
+  /// No description provided for @categorySeafood.
+  ///
+  /// In ko, this message translates to:
+  /// **'해산물'**
+  String get categorySeafood;
+
+  /// No description provided for @categoryBeverage.
+  ///
+  /// In ko, this message translates to:
+  /// **'음료'**
+  String get categoryBeverage;
+
+  /// No description provided for @categoryBakery.
+  ///
+  /// In ko, this message translates to:
+  /// **'빵'**
+  String get categoryBakery;
+
+  /// No description provided for @categorySauce.
+  ///
+  /// In ko, this message translates to:
+  /// **'조미료/소스'**
+  String get categorySauce;
+
+  /// No description provided for @categoryFrozen.
+  ///
+  /// In ko, this message translates to:
+  /// **'냉동식품'**
+  String get categoryFrozen;
+
+  /// No description provided for @categoryCanned.
+  ///
+  /// In ko, this message translates to:
+  /// **'통조림'**
+  String get categoryCanned;
+
+  /// No description provided for @categoryInstant.
+  ///
+  /// In ko, this message translates to:
+  /// **'즉석/밀키트'**
+  String get categoryInstant;
+
+  /// No description provided for @categoryNoodle.
+  ///
+  /// In ko, this message translates to:
+  /// **'면/파스타'**
+  String get categoryNoodle;
+
+  /// No description provided for @categoryEtc.
+  ///
+  /// In ko, this message translates to:
+  /// **'기타'**
+  String get categoryEtc;
+
+  /// No description provided for @categoryFish.
+  ///
+  /// In ko, this message translates to:
+  /// **'생선'**
+  String get categoryFish;
+
+  /// No description provided for @confirm.
+  ///
+  /// In ko, this message translates to:
+  /// **'확인'**
+  String get confirm;
+
+  /// No description provided for @enterFridgeName.
+  ///
+  /// In ko, this message translates to:
+  /// **'냉장고 이름을 입력해주세요'**
+  String get enterFridgeName;
 }
 
 class _AppLocalizationsDelegate

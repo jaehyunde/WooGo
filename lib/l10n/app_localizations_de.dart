@@ -240,6 +240,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get categoryDeleted => 'Kategorie gelöscht.';
 
   @override
+  String categoryDeletedWithName(String categoryName) {
+    return 'Kategorie \'$categoryName\' wurde gelöscht.';
+  }
+
+  @override
   String get favorites => 'Favoriten';
 
   @override
@@ -510,4 +515,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String countItems(int count) {
     return '$count Stück';
   }
+
+  @override
+  String get categoryMeat => 'Fleisch';
+
+  @override
+  String get categoryVegetable => 'Gemüse';
+
+  @override
+  String get categoryFruit => 'Obst';
+
+  @override
+  String get categoryDairy => 'Milchprodukte';
+
+  @override
+  String get categorySeafood => 'Meeresfrüchte';
+
+  @override
+  String get categoryBeverage => 'Getränke';
+
+  @override
+  String get categoryBakery => 'Backwaren';
+
+  @override
+  String get categorySauce => 'Saucen & Gewürze';
+
+  @override
+  String get categoryFrozen => 'Tiefkühlkost';
+
+  @override
+  String get categoryCanned => 'Konserven';
+
+  @override
+  String get categoryInstant => 'Fertiggerichte';
+
+  @override
+  String get categoryNoodle => 'Nudeln & Pasta';
+
+  @override
+  String get categoryEtc => 'Sonstiges';
+
+  @override
+  String get categoryFish => 'Fisch';
+
+  @override
+  String get confirm => 'Bestädigen';
+
+  @override
+  String get enterFridgeName =>
+      'Bitte geben Sie einen Namen für den Kühlschrank ein';
 }

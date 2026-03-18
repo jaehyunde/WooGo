@@ -123,6 +123,15 @@
   "addDefaultCategoriesHint": "Drücke den oberen Button, um Standardkategorien hinzuzufügen!",
   "defaultExpiryShort": "Standardhaltbarkeit: {days} Tage",
   "categoryDeleted": "Kategorie gelöscht.",
+  "categoryDeletedWithName": "Kategorie '{categoryName}' wurde gelöscht.",
+  "@categoryDeletedWithName": {
+    "description": "Löschmeldung mit Kategorienamen",
+    "placeholders": {
+      "categoryName": {
+        "type": "String"
+      }
+    }
+  },
   "favorites": "Favoriten",
   "noFavoriteItems": "Es gibt keine Favoriten.",
   "checkStarWhenAdding": "Versuche beim Hinzufügen eines Artikels den Stern zu markieren!",
@@ -367,5 +376,21 @@
         "type": "int"
       }
     }
-  }
+  },
+  "categoryMeat": "Fleisch",
+  "categoryVegetable": "Gemüse",
+  "categoryFruit": "Obst",
+  "categoryDairy": "Milchprodukte",
+  "categorySeafood": "Meeresfrüchte",
+  "categoryBeverage": "Getränke",
+  "categoryBakery": "Backwaren",
+  "categorySauce": "Saucen & Gewürze",
+  "categoryFrozen": "Tiefkühlkost",
+  "categoryCanned": "Konserven",
+  "categoryInstant": "Fertiggerichte",
+  "categoryNoodle": "Nudeln & Pasta",
+  "categoryEtc": "Sonstiges",
+  "categoryFish": "Fisch",
+  "confirm": "Bestädigen",
+  "enterFridgeName": "Bitte geben Sie einen Namen für den Kühlschrank ein"
 }
