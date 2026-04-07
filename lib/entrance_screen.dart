@@ -1,5 +1,3 @@
-// lib/entrance_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +7,8 @@ import 'intro_screen.dart';
 import 'l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'locale_provider.dart';
+import 'thema/app_color.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 class EntranceScreen extends StatefulWidget {
   @override
@@ -22,7 +22,8 @@ class _EntranceScreenState extends State<EntranceScreen> {
   final _fridgeNameController = TextEditingController();
 
   bool _isLoading = false;
-  bool _isJoinMode = false; // ★ [신규] 입력창을 보여줄지 말지 결정하는 스위치
+  bool _isJoinMode = false; // 입력창을 보여줄지 말지 결정하는 스위치
+  bool _isCodeFocused = false;
 
   @override
   void initState() {
@@ -240,147 +241,209 @@ class _EntranceScreenState extends State<EntranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (_isLoading) return Scaffold(body: Center(child: Image.asset('assets/images/loading_logo.png', fit: BoxFit.cover, alignment: Alignment.center)));
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      // 전체를 Stack으로 감싸서 메인 레이아웃 위에 버튼을 띄웁니다.
-      body: Stack(
-        children: [
-          // --- [기존 메인 레이아웃] ---
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // 로고 영역
-                Icon(Icons.kitchen_rounded, size: 80, color: Colors.blue[300]),
-                SizedBox(height: 20),
-                Text(
-                  "WooGo",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'KidariFont',
-                    color: Colors.blue[800],
-                  ),
-                ),
-                Text(AppLocalizations.of(context)!.myFridge,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey,
-                        fontSize: 18,
-                        fontFamily: 'KidariFont')),
-                SizedBox(height: 60),
-
-                // ★ 버튼 A: 새 냉장고 만들기
-                SizedBox(
-                  height: 55,
-                  child: ElevatedButton(
-                    onPressed: _showCreateFridgeDialog,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      elevation: 2,
-                    ),
-                    child: Text(AppLocalizations.of(context)!.createNewFridge,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                Row(children: [
-                  Expanded(child: Divider()),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 10), child: Text(AppLocalizations.of(context)!.or, style: TextStyle(fontSize: 16, color: Colors.grey))),
-                  Expanded(child: Divider())
-                ]),
-
-                SizedBox(height: 15),
-
-                // ★ 버튼 B vs 입력창
-                AnimatedCrossFade(
-                  duration: Duration(milliseconds: 300),
-                  crossFadeState: _isJoinMode ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-
-                  firstChild: SizedBox(
-                    width: double.infinity,
-                    height: 60,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        setState(() => _isJoinMode = true);
-                      },
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.blue),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      ),
-                      child: Text(AppLocalizations.of(context)!.enterWithInviteCode,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-
-                  secondChild: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: TextField(
-                      controller: _codeController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.inviteCode6Digits,
-                        hintText: AppLocalizations.of(context)!.inviteCodeExample,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        prefixIcon: IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: () {
-                            setState(() => _isJoinMode = false);
-                            _codeController.clear();
-                          },
-                        ),
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.login, color: Colors.blue),
-                          onPressed: _joinFridge,
-                        ),
-                      ),
-                      onSubmitted: (_) => _joinFridge(),
-                    ),
-                  ),
-                ),
-              ],
+    // 1. 전체를 GestureDetector로 감싸 빈 공간 터치를 감지합니다. ✅
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus(); // 포커스 해제 -> 점선 테두리 사라짐
+      },
+      // 2. 투명한 배경 터치도 인식하도록 설정 (iOS 필수) ✅
+      behavior: HitTestBehavior.opaque,
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/entrance_basic.png', // 실제 경로에 맞게 수정
+                fit: BoxFit.cover, // 1242x2688 이미지를 화면에 꽉 채우는 핵심 속성!
+              ),
             ),
-          ),
 
-          // --- [추가된 지구본 버튼] ---
-          Positioned(
-            top: 60, // 상태바 아래 적절한 위치
-            right: 25,
-            child: GestureDetector(
-              onTap: _showLanguageDialog,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 5,
-                      spreadRadius: 1,
+            // 2. (옵션) 배경이 너무 밝아 글자가 안 보인다면 어둡게 처리 ✅
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // 로고 영역
+                  // const Icon(Icons.kitchen_rounded, size: 80, color: AppColors.navy03),
+                  const SizedBox(height: 350),
+                  /*const Text(
+                    "WooGo",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'KidariFont',
+                      color: AppColors.navy01,
                     ),
-                  ],
-                ),
-                child: const Text(
-                  "🌐",
-                  style: TextStyle(fontSize: 26),
+                  ),
+                  Text(AppLocalizations.of(context)!.myFridge,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: AppColors.navy02,
+                          fontSize: 18,
+                          fontFamily: 'KidariFont')),*/
+                  const SizedBox(height: 330),
+
+                  // ★ 버튼 A: 새 냉장고 만들기
+                  SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _showCreateFridgeDialog,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.navy01,
+                        foregroundColor: AppColors.appwhite,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        elevation: 2,
+                      ),
+                      child: Text(AppLocalizations.of(context)!.createNewFridge,
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  Row(children: [
+                    const Expanded(child: Divider(color: AppColors.navy03)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(AppLocalizations.of(context)!.or,
+                            style: const TextStyle(fontSize: 14, color: AppColors.navy03, fontWeight: FontWeight.bold))),
+                    const Expanded(child: Divider(color: AppColors.navy03))
+                  ]),
+
+                  const SizedBox(height: 12),
+
+                  // ★ 버튼 B vs 입력창
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (Widget child, Animation<double> animation) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                    child: !_isJoinMode
+                        ? // --- [Case 1: 초대코드 입력 버튼] ---
+                    SizedBox(
+                      key: const ValueKey('button'),
+                      width: double.infinity,
+                      height: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: OutlinedButton(
+                          onPressed: () => setState(() => _isJoinMode = true),
+                          style: OutlinedButton.styleFrom(
+                            // 1. 버튼 배경색 추가 (흰색 10% 정도가 세련되게 보입니다) ✅
+                            backgroundColor: AppColors.appwhite,
+                            side: const BorderSide(color: AppColors.navy01, width: 2),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                          child: Text(AppLocalizations.of(context)!.enterWithInviteCode,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  color: AppColors.navy01,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                    )
+                        : // --- [Case 2: 초대코드 입력창] ---
+                    SizedBox(
+                      key: const ValueKey('input'),
+                      width: double.infinity,
+                      height: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: Container(
+                          // 2. 입력창 배경색 및 라운드 처리 ✅
+                          decoration: BoxDecoration(
+                            color: AppColors.appwhite, // 버튼과 동일한 배경색
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Focus(
+                            onFocusChange: (hasFocus) => setState(() => _isCodeFocused = hasFocus),
+                            child: DottedBorder(
+                              // 3. 테두리 색상 제어 ✅
+                              color: _isCodeFocused ? AppColors.navy01 : AppColors.navy01,
+                              strokeWidth: 2,
+                              strokeCap: StrokeCap.round,
+                              dashPattern: _isCodeFocused ? const [4, 5.5] : const [1, 0],
+                              borderType: BorderType.RRect,
+                              radius: const Radius.circular(12),
+                              child: Center(
+                                child: TextField(
+                                  controller: _codeController,
+                                  cursorColor: AppColors.navy01,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  style: const TextStyle(
+                                      color: AppColors.navy01, fontFamily: 'KidariFont', fontSize: 16),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                                    hintText: AppLocalizations.of(context)!.inviteCodeExample,
+                                    hintStyle: TextStyle(color: AppColors.navy01.withOpacity(0.6), fontSize: 16, fontWeight: FontWeight.bold),
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    prefixIcon: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: const Icon(Icons.arrow_back, color: AppColors.navy01, size: 20),
+                                      onPressed: () {
+                                        setState(() => _isJoinMode = false);
+                                        _codeController.clear();
+                                        FocusScope.of(context).unfocus();
+                                      },
+                                    ),
+                                    suffixIcon: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      icon: const Icon(Icons.login, color: AppColors.navy01, size: 20),
+                                      onPressed: _joinFridge,
+                                    ),
+                                  ),
+                                  onSubmitted: (_) => _joinFridge(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // --- [추가된 지구본 버튼] ---
+            Positioned(
+              top: 60,
+              right: 25,
+              child: GestureDetector(
+                onTap: _showLanguageDialog,
+                child: Container(
+                  padding: const EdgeInsets.all(4), // 아이콘 크기에 맞춰 패딩 살짝 조절
+                  decoration: BoxDecoration(
+                    color: AppColors.navy01, // 배경은 기존 네이비 유지
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 5,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                  // 1. 이모지 대신 Icon 위젯 사용 ✅
+                  child: const Icon(
+                    Icons.language, // 또는 Icons.public (취향에 맞게 선택)
+                    color: AppColors.appwhite, // 아이콘 색상을 흰색 계열로 변경
+                    size: 35, // 기존 이모지 크기와 비슷하게 설정
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

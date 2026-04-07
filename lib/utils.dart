@@ -9,8 +9,6 @@ String translateLocation(String dbValue, BuildContext context) {
   return dbValue;
 }
 
-// lib/utils.dart 에 추가
-
 /// 카테고리 이름을 입력받아 적절한 이모지를 반환하는 함수
 String getCategoryEmoji(String name) {
   final lowerName = name.toLowerCase();

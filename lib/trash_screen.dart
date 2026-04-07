@@ -1,11 +1,10 @@
-// lib/trash_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'fridge_service.dart';
 import 'item_model.dart';
 import 'l10n/app_localizations.dart';
+import 'thema/app_color.dart';
 
 class TrashScreen extends StatefulWidget {
   @override
@@ -115,7 +114,7 @@ class _TrashScreenState extends State<TrashScreen> {
     });
   }
 
-  // ★ [신규] 휴지통 전체 비우기 기능 (앱바 우측 버튼용)
+  // 휴지통 전체 비우기 기능 (앱바 우측 버튼용)
   Future<void> _emptyTrash(List<QueryDocumentSnapshot> allDocs) async {
     if (allDocs.isEmpty) return;
 
@@ -124,11 +123,12 @@ class _TrashScreenState extends State<TrashScreen> {
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.emptyTrash,
             style: TextStyle(
-                fontFamily: 'KidariFont', fontWeight: FontWeight.bold)
+                fontFamily: 'KidariFont',
+                fontWeight: FontWeight.bold, color: AppColors.navy02)
         ),
         content: Text(
             AppLocalizations.of(context)!.confirmEmptyTrash(allDocs.length),//"휴지통에 있는 모든 항목(${allDocs.length}개)을 영구 삭제하시겠습니까?",
-            style: TextStyle(fontFamily: 'KidariFont')
+            style: TextStyle(fontFamily: 'KidariFont', color: AppColors.navy02)
         ),
         actions: [
           TextButton(child: Text(AppLocalizations.of(context)!.cancel, style: TextStyle(color: Colors.grey, fontFamily: 'KidariFont')), onPressed: () => Navigator.pop(context, false)),
@@ -136,8 +136,14 @@ class _TrashScreenState extends State<TrashScreen> {
             icon: Icon(Icons.delete_sweep, size: 18),
             label: Text(
                 AppLocalizations.of(context)!.emptyAll,
-                style: TextStyle(fontFamily: 'KidariFont')),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, foregroundColor: Colors.white),
+                style: TextStyle(
+                    fontFamily: 'KidariFont',
+                )
+            ),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white
+            ),
             onPressed: () => Navigator.pop(context, true),
           ),
         ],
@@ -153,7 +159,7 @@ class _TrashScreenState extends State<TrashScreen> {
           SnackBar(
               content: Text(
                   AppLocalizations.of(context)!.trashCleaned,
-                  style: TextStyle(fontFamily: 'KidariFont')
+                  style: TextStyle(fontFamily: 'KidariFont', color: AppColors.navy01)
               ),
               behavior: SnackBarBehavior.floating));
     }
@@ -162,15 +168,28 @@ class _TrashScreenState extends State<TrashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.navy01,
       appBar: AppBar(
+        backgroundColor: AppColors.navy01,
         title: _isSelectionMode
             ? Text(
             AppLocalizations.of(context)!.selectedCount(_selectedIds.length),//"${_selectedIds.length}개 선택됨",
-            style: TextStyle(fontFamily: 'KidariFont', fontSize: 18, fontWeight: FontWeight.bold))
-            : Text(AppLocalizations.of(context)!.trashTitle, style: TextStyle(fontFamily: 'KidariFont', fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                fontFamily: 'KidariFont',
+                fontSize: 18,
+                color: AppColors.appwhite
+            )
+        )
+            : Text(AppLocalizations.of(context)!.trashTitle,
+            style: TextStyle(
+                fontFamily: 'KidariFont',
+                color: AppColors.contrast
+            )
+        ),
         leading: _isSelectionMode
             ? IconButton(icon: Icon(Icons.close), onPressed: _toggleSelectionMode)
             : BackButton(),
+        iconTheme: IconThemeData(color: AppColors.contrast),
         // 선택 모드일 때와 아닐 때 앱바 우측 액션 버튼이 바뀜
         actions: _isSelectionMode
             ? [
@@ -187,8 +206,6 @@ class _TrashScreenState extends State<TrashScreen> {
           SizedBox(width: 10),
         ]
             : [
-          // 데이터가 있을 때만 전체 비우기 버튼 활성화를 위해 StreamBuilder 안에서 데이터를 받아와야 하지만,
-          // UI 편의상 앱바에 고정하고 비어있을 땐 안내 스낵바를 띄웁니다.
           StreamBuilder<QuerySnapshot>(
               stream: _service.getTrashedItemsStream(),
               builder: (context, snapshot) {
@@ -231,7 +248,12 @@ class _TrashScreenState extends State<TrashScreen> {
                   SizedBox(height: 10),
                   Text(
                       AppLocalizations.of(context)!.trashEmpty,
-                      style: TextStyle(color: Colors.grey, fontSize: 18, fontFamily: 'KidariFont')),
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                          fontFamily: 'KidariFont'
+                      )
+                  ),
                 ],
               ),
             );
@@ -268,7 +290,10 @@ class _TrashScreenState extends State<TrashScreen> {
                 )
                     : Container(
                   padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: Colors.grey[200], shape: BoxShape.circle),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      shape: BoxShape.circle
+                  ),
                   child: Text("", style: TextStyle(fontSize: 15)),
                 ),
                 title: Text(
@@ -277,12 +302,12 @@ class _TrashScreenState extends State<TrashScreen> {
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                       fontFamily: 'KidariFont',
-                      color: Colors.black87, // ★ [요청 반영] 회색 글씨 원래대로 (검정)
+                      color: AppColors.contrast,
                     )
                 ),
                 subtitle: Text(
                     AppLocalizations.of(context)!.discardedItemInfo(item.quantity, DateFormat('yy.MM.dd').format(item.expiryDate)),//"버린 개수: ${item.quantity}개  |  유통기한: ${DateFormat('yy.MM.dd').format(item.expiryDate)}",
-                    style: TextStyle(fontFamily: 'KidariFont', color: Colors.blueGrey, fontSize: 13)
+                    style: TextStyle(fontFamily: 'KidariFont', color: AppColors.appwhite, fontSize: 13)
                 ),
               );
             },
@@ -297,15 +322,21 @@ class _TrashScreenState extends State<TrashScreen> {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(item.name, style: TextStyle(fontFamily: 'KidariFont', fontWeight: FontWeight.bold)),
+        title: Text(item.name, style: TextStyle(
+            fontFamily: 'KidariFont',
+            fontWeight: FontWeight.bold,
+            color: AppColors.navy02
+        )
+        ),
         content: Text(
             AppLocalizations.of(context)!.whatToDoWithItem,
-            style: TextStyle(fontFamily: 'KidariFont')),
+            style: TextStyle(
+                fontFamily: 'KidariFont', color: AppColors.navy02)),
         actionsAlignment: MainAxisAlignment.spaceBetween,
         actions: [
           TextButton(
               child: Text(AppLocalizations.of(context)!.cancel,
-                  style: TextStyle(color: Colors.grey, fontFamily: 'KidariFont')),
+                  style: TextStyle(color: AppColors.navy03, fontFamily: 'KidariFont')),
               onPressed: () => Navigator.pop(dialogContext)
           ),
           Wrap(

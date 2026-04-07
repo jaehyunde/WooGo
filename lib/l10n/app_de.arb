@@ -1,5 +1,5 @@
 {
-  "daysExpired": "{days} Tage abgelaufen",
+  "daysExpired": "abgelaufen",
   "@daysExpired": {
         "placeholders": {
           "days": {
@@ -8,7 +8,7 @@
         }
       },
   "today": "Heute",
-  "daysLeft": "{days} Tage übrig",
+  "daysLeft": "{days} Tage",
   "@daysLeft": {
           "placeholders": {
             "days": {
@@ -98,7 +98,7 @@
   "added": "Hinzugefügt",
   "alreadySaved": "Bereits gespeichert",
   "undoWithSpace": "Rückgängig",
-  "fillFridgePlus": "Kühlschrank auffüllen +",
+  "fillFridgePlus": "Kühlschrank auffüllen",
   "itemName": "Artikelname",
   "itemNameExample": "z. B. Apfel, Tofu",
   "error": "Fehler",
@@ -137,6 +137,14 @@
   "checkStarWhenAdding": "Versuche beim Hinzufügen eines Artikels den Stern zu markieren!",
   "deleteFavorite": "Favorit löschen",
   "deleteFavoriteConfirm": "Möchten Sie {item} aus der Liste der häufig verwendeten Artikel entfernen? (Der Stern bei Artikeln im Kühlschrank wird ebenfalls entfernt.)",
+  "@deleteFavoriteConfirm": {
+      "description": "목록에서 삭제",
+      "placeholders": {
+          "item": {
+              "type": "String"
+          }
+      }
+    },
   "delete": "Löschen",
   "deleted": "Gelöscht.",
   "touchFridgeToOpen": "Tippe auf den Kühlschrank, um ihn zu öffnen",
@@ -328,7 +336,7 @@
     }
   },
 
-  "trashTitle": "Papierkorb 🗑️",
+  "trashTitle": "Papierkorb",
 
   "restoreSelected": "Ausgewählte wiederherstellen",
   "deleteSelectedPermanently": "Ausgewählte endgültig löschen",
@@ -392,5 +400,6 @@
   "categoryEtc": "Sonstiges",
   "categoryFish": "Fisch",
   "confirm": "Bestädigen",
-  "enterFridgeName": "Bitte geben Sie einen Namen für den Kühlschrank ein"
+  "enterFridgeName": "Bitte geben Sie einen Namen für den Kühlschrank ein",
+  "copiedToClipboard": "kopiert"
 }

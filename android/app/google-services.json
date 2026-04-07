@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "51745289968",
+    "project_id": "woogo-d944d",
+    "storage_bucket": "woogo-d944d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51745289968:android:89bec68e09e053107c7435",
+        "android_client_info": {
+          "package_name": "com.gonkii.woogo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwUXB6iRfGGiNgaBXg39Osz20YBHOWQO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

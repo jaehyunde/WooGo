@@ -1,5 +1,5 @@
 {
-  "daysExpired": "{days}일 지남",
+  "daysExpired": "기한지남",
   "@daysExpired": {
       "placeholders": {
         "days": {
@@ -8,7 +8,7 @@
       }
     },
   "today": "오늘까지",
-  "daysLeft": "{days}일 남음",
+  "daysLeft": "{days}일",
   "@daysLeft": {
         "placeholders": {
           "days": {
@@ -98,7 +98,7 @@
   "added": "추가됨",
   "alreadySaved": "이미 저장되었습니다",
   "undoWithSpace": "실행 취소",
-  "fillFridgePlus": "냉장고 채우기 +",
+  "fillFridgePlus": "냉장고 채우기",
   "itemName": "재료 이름",
   "itemNameExample": "예: 사과, 두부",
   "error": "에러",
@@ -137,6 +137,14 @@
   "checkStarWhenAdding": "아이템 추가 시 별을 체크해보세요!",
   "deleteFavorite": "즐겨찾기 삭제",
   "deleteFavoriteConfirm": "{item}을(를) 자주 쓰는 목록에서 지우시겠습니까? (냉장고에 있는 아이템의 별표도 해제됩니다)",
+  "@deleteFavoriteConfirm": {
+    "description": "목록에서 삭제",
+    "placeholders": {
+        "item": {
+            "type": "String"
+        }
+    }
+  },
   "delete": "삭제",
   "deleted": "삭제되었습니다.",
   "touchFridgeToOpen": "냉장고를 터치해서 열어보세요",
@@ -324,7 +332,7 @@
     }
   },
 
-  "trashTitle": "휴지통 🗑️",
+  "trashTitle": "휴지통",
 
   "restoreSelected": "선택 항목 복구",
   "deleteSelectedPermanently": "선택 항목 영구 삭제",
@@ -386,5 +394,6 @@
   "categoryEtc": "기타",
   "categoryFish": "생선",
   "confirm": "확인",
-  "enterFridgeName": "냉장고 이름을 입력해주세요"
+  "enterFridgeName": "냉장고 이름을 입력해주세요",
+  "copiedToClipboard": "코드가 복사 되었습니다."
 }

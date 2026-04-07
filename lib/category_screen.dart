@@ -1,10 +1,9 @@
-// lib/category_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'fridge_service.dart';
 import 'l10n/app_localizations.dart';
 import 'utils.dart';
+import 'thema/app_color.dart';
 
 class CategorySettingsScreen extends StatefulWidget {
   @override
@@ -35,15 +34,24 @@ class _CategorySettingsScreenState extends State<CategorySettingsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context)!.defaultExpiryDays, style: TextStyle(color: Colors.grey[700], fontSize: 12)),
+        Text(
+            AppLocalizations.of(context)!.defaultExpiryDays,
+            style: TextStyle(
+                color: AppColors.navy01,
+                fontSize: 12
+            )
+        ),
         SizedBox(height: 8),
         Row(
           children: [
             Container(
               width: 40, height: 40,
-              decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8)
+              ),
               child: IconButton(
-                icon: Icon(Icons.remove, size: 20),
+                icon: Icon(Icons.remove, size: 20, color: AppColors.navy01,),
                 onPressed: _decreaseDays,
               ),
             ),
@@ -129,7 +137,11 @@ class _CategorySettingsScreenState extends State<CategorySettingsScreen> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: _nameController, decoration: InputDecoration(labelText: "이름")),
+            TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.name)
+            ),
             SizedBox(height: 20),
             _buildDaysInput(),
           ],
@@ -158,14 +170,31 @@ class _CategorySettingsScreenState extends State<CategorySettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.manageCategories),
+        title: Text(
+          AppLocalizations.of(context)!.manageCategories,
+          style: TextStyle(
+              color: AppColors.navy01
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: AppColors.navy01,
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(Icons.refresh), color: AppColors.navy01,
             tooltip: AppLocalizations.of(context)!.fillDefaultCategories,
             onPressed: () async {
               await _service.initializeDefaultCategories();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.refresh)));
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                        AppLocalizations.of(context)!.refresh,
+                        style: TextStyle(
+                            color: AppColors.navy01
+                        ),
+                      )
+                  )
+              );
             },
           )
         ],
@@ -204,17 +233,15 @@ class _CategorySettingsScreenState extends State<CategorySettingsScreen> {
                     style: const TextStyle(fontSize: 20),
                   ),
                 ),
-
-                // 2. title: 카테고리 이름을 현재 언어 설정에 맞게 번역하여 표시합니다. ✅
                 title: Text(
                     translateCategory(categoryName, context),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'KidariFont')
+                    style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'KidariFont', color: AppColors.navy01)
                 ),
 
                 // 3. subtitle: "기본 유통기한" 문구도 다국어 처리를 권장합니다.
                 subtitle: Text(
                   "${AppLocalizations.of(context)!.defaultExpiryDays}: $defaultDays${AppLocalizations.of(context)!.day}",
-                  style: const TextStyle(fontFamily: 'KidariFont'),
+                  style: TextStyle(fontFamily: 'KidariFont', color: AppColors.navy01),
                 ),
 
                 onTap: () {
@@ -222,7 +249,7 @@ class _CategorySettingsScreenState extends State<CategorySettingsScreen> {
                 },
 
                 trailing: IconButton(
-                  icon: Icon(Icons.delete, color: Colors.grey[400]),
+                  icon: Icon(Icons.delete, color: AppColors.navy01),
                   onPressed: () {
                     _service.deleteCategory(docs[index].id);
                     // 4. SnackBar 메시지도 다국어 대응 ✅

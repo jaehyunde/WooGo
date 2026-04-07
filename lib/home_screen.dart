@@ -12,6 +12,9 @@ import 'l10n/app_localizations.dart';
 import 'locale_provider.dart';
 import 'package:provider/provider.dart';
 import 'utils.dart';
+import 'thema/app_color.dart';
+import 'package:flutter/services.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,6 +23,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final FridgeService _service = FridgeService();
+
+  bool _isDaysFocused = false;
 
   // 날짜 계산
   String _calculateDDay(DateTime expiry) {
@@ -127,12 +132,15 @@ class _HomeScreenState extends State<HomeScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
+        behavior: SnackBarBehavior.fixed,
         // ★ action을 지우고 content 안에 Row로 '실행 취소'를 직접 만들었습니다.
         content: Row(
           children: [
-            Expanded(
-                child: Text(isConsume ? AppLocalizations.of(context)!.ateOne : AppLocalizations.of(context)!.discardedOne, style: TextStyle(fontFamily: 'KidariFont'))
+            SizedBox(
+                width: 180,
+                child: Text(
+                    isConsume ? AppLocalizations.of(context)!.ateOne : AppLocalizations.of(context)!.discardedOne,
+                    style: TextStyle(fontFamily: 'KidariFont'))
             ),
             GestureDetector(
               onTap: () async {
@@ -144,11 +152,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     await _service.updateItemStatus(item.id!, 'normal');
                     if (originalQty > 0) await _service.updateItemQuantity(item.id!, originalQty);
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.undoDiscardFromHistory), behavior: SnackBarBehavior.floating));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(
+                                AppLocalizations.of(context)!.undoDiscardFromHistory
+                            ),
+                            behavior: SnackBarBehavior.fixed)
+                    );
                   }
                 }
               },
-              child: Text(AppLocalizations.of(context)!.undo, style: TextStyle(color: Colors.yellowAccent, fontWeight: FontWeight.bold, fontFamily: 'KidariFont')),
+              child: Text(
+                  AppLocalizations.of(context)!.undo,
+                  style: TextStyle(
+                      color: Colors.yellowAccent,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'KidariFont'
+                  )
+              ),
             ),
           ],
         ),
@@ -215,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             {'dbValue': '펜트리', 'label': AppLocalizations.of(context)!.storagePantry},
                           ].map((item) {
                             return DropdownMenuItem<String>(
-                              value: item['dbValue'], // 드롭다운 내부 값은 한국어 고정 (에러 방지)
+                              value: item['dbValue'],
                               child: Text(item['label']!, style: TextStyle(fontFamily: 'KidariFont')), // 화면에는 번역 표시
                             );
                           }).toList(),
@@ -244,9 +265,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   actions: [
-                    // ... (취소 버튼 코드는 기존과 동일) ...
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white
+                      ),
                       onPressed: () async {
                         await _service.updateItemProperties(
                           item.id!,
@@ -290,24 +313,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(
                   fontFamily: 'KidariFont',
                   fontWeight: FontWeight.bold,
+                  color: AppColors.navy02
                 ),
               ),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // 팝업 상단 아이콘들 (수정 버튼 & 즐겨찾기)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.edit_note, color: Colors.blueGrey, size: 28),
+                          icon: Icon(Icons.edit_note, color: AppColors.navy02, size: 28),
                           tooltip: AppLocalizations.of(context)!.editItemInfo,
                           onPressed: () async {
                             Navigator.pop(dialogContext); // 현재 팝업 닫기
 
                             // 장소 리스트는 탭에 맞춰서 고정
-                            List<String> dbLocations = [AppLocalizations.of(context)!.storageFridge, AppLocalizations.of(context)!.storageFreezer, AppLocalizations.of(context)!.storagePantry];
+                            List<String> dbLocations = [
+                              AppLocalizations.of(context)!.storageFridge,
+                              AppLocalizations.of(context)!.storageFreezer,
+                              AppLocalizations.of(context)!.storagePantry];
 
                             // DB에서 유저가 만든 최신 카테고리 이름만 쏙 뽑아옵니다
                             List<String> dbCategories = await _service.getCategoryNames();
@@ -344,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         // 빼기 버튼
                         IconButton(
-                            icon: Icon(Icons.remove_circle_outline),
+                            icon: Icon(Icons.remove_circle_outline, color: AppColors.navy01,),
                             onPressed: () {
                               if (countToProcess > 1) setState(() => countToProcess--);
                             }
@@ -358,7 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         // 더하기 버튼
                         IconButton(
-                            icon: Icon(Icons.add_circle_outline),
+                            icon: Icon(Icons.add_circle_outline, color: AppColors.navy01,),
                             onPressed: () {
                               setState(() => countToProcess++);
                             }
@@ -392,26 +418,60 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: TextField(
-                            controller: daysController,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              labelText: AppLocalizations.of(context)!.days,
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          child: SizedBox(
+                            height: 50, // 다른 입력창들과 높이 통일 ✅
+                            child: Padding(
+                              padding: const EdgeInsets.all(1.0), // 테두리 잘림 방지 ✅
+                              child: Focus(
+                                onFocusChange: (hasFocus) {
+                                  setState(() => _isDaysFocused = hasFocus); // 상태 변수 필요
+                                },
+                                child: DottedBorder(
+                                  // 선택 시 navy01 색상, 미선택 시 연한 navy01
+                                  color: _isDaysFocused ? AppColors.navy01 : AppColors.navy01.withOpacity(0.5),
+                                  strokeWidth: _isDaysFocused ? 2 : 1, // 선택 시 더 선명하게
+                                  strokeCap: StrokeCap.round, // 모서리 뭉침 방지 ✅
+
+                                  // 선택 시 [4, 4] 점선, 미선택 시 [1, 0] 실선 ✅
+                                  dashPattern: _isDaysFocused ? const [4, 4] : const [1, 0],
+
+                                  borderType: BorderType.RRect,
+                                  radius: const Radius.circular(10), // 기존 디자인 유지 (10)
+                                  child: Center(
+                                    child: TextField(
+                                      controller: daysController,
+                                      keyboardType: TextInputType.number,
+                                      textAlign: TextAlign.center,
+                                      textAlignVertical: TextAlignVertical.center,
+                                      style: const TextStyle(fontFamily: 'KidariFont', fontSize: 16),
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        // DottedBorder가 테두리를 담당하므로 TextField 보더는 모두 제거 ✅
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+
+                                        // labelText 대신 힌트를 사용하거나, 공간이 좁으면 아래처럼 설정
+                                        hintText: AppLocalizations.of(context)!.days,
+                                        hintStyle: TextStyle(color: AppColors.navy01.withOpacity(0.4), fontSize: 14),
+                                        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                                      ),
+                                      onChanged: (val) {
+                                        int? days = int.tryParse(val);
+                                        if (days != null) {
+                                          setState(() {
+                                            currentExpiryDate = DateTime.now().add(Duration(days: days));
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                            onChanged: (val) {
-                              int? days = int.tryParse(val);
-                              if (days != null) {
-                                setState(() {
-                                  currentExpiryDate = DateTime.now().add(Duration(days: days));
-                                });
-                              }
-                            },
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 20),
                         Expanded(
                           flex: 2,
                           child: InkWell(
@@ -432,12 +492,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
-                              decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey[300]!)),
+                              decoration: BoxDecoration(
+                                  color: Colors.white70,
+                                  borderRadius:
+                                  BorderRadius.circular(8),
+                                  border: Border.all(color: Colors.grey[300]!)
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(DateFormat('yy.MM.dd').format(currentExpiryDate), style: TextStyle(fontSize: 16, color: Colors.blue[700], fontFamily: 'KidariFont')),
-                                  Icon(Icons.calendar_today, size: 18, color: Colors.blueGrey),
+                                  Text(
+                                      DateFormat('yy.MM.dd').format(currentExpiryDate),
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: AppColors.navy06,
+                                          fontFamily: 'KidariFont')
+                                  ),
+                                  Icon(Icons.calendar_today, size: 18, color: AppColors.navy01),
                                 ],
                               ),
                             ),
@@ -452,24 +523,59 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         // 단순 날짜 수정 버튼
                         OutlinedButton.icon(
-                          icon: Icon(Icons.edit_calendar, size: 18, color: Colors.grey[700]),
-                          label: Text(AppLocalizations.of(context)!.editCurrentItemDateOnly, style: TextStyle(fontFamily: 'KidariFont', color: Colors.grey[800])),
-                          style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 10)),
+                          icon: Icon(
+                              Icons.edit_calendar,
+                              size: 18,
+                              color: AppColors.navy01
+                          ),
+                          label: Text(
+                              AppLocalizations.of(context)!.editCurrentItemDateOnly,
+                              style: TextStyle(
+                                  fontFamily: 'KidariFont',
+                                  color: AppColors.navy01
+                              )
+                          ),
+                          style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(vertical: 10)),
                           onPressed: () async {
                             await _service.updateItemExpiryDate(item.id!, currentExpiryDate);
                             await NotificationService().cancelNotification(item.id!);
-                            await NotificationService().scheduleNotification(itemId: item.id!, itemName: item.name, expiryDate: currentExpiryDate);
-
+                            await NotificationService().scheduleNotification(
+                                itemId: item.id!,
+                                itemName: item.name,
+                                expiryDate: currentExpiryDate
+                            );
                             if (!mainContext.mounted) return;
-                            ScaffoldMessenger.of(mainContext).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.expiryUpdated, style: TextStyle(fontFamily: 'KidariFont')), behavior: SnackBarBehavior.floating, duration: Duration(seconds: 2)));
+                            ScaffoldMessenger.of(mainContext).showSnackBar(
+                                SnackBar(
+                                    content: Text(
+                                        AppLocalizations.of(context)!.expiryUpdated,
+                                        style: TextStyle(
+                                            fontFamily: 'KidariFont')
+                                    ),
+                                    behavior: SnackBarBehavior.fixed,
+                                    duration: Duration(seconds: 2)
+                                )
+                            );
                           },
                         ),
                         SizedBox(height: 8),
                         // 새로운 항목으로 추가하는 버튼 (유저 요청 기능)
                         ElevatedButton.icon(
-                          icon: Icon(Icons.add_shopping_cart, size: 18),
-                          label: Text(AppLocalizations.of(context)!.addAsNewExpiryItem, style: TextStyle(fontFamily: 'KidariFont', fontWeight: FontWeight.bold, fontSize: 16)),
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white, padding: EdgeInsets.symmetric(vertical: 12)),
+                          icon: Icon(Icons.add_shopping_cart, size: 18, color: Colors.white70,),
+                          label: Text(
+                              AppLocalizations.of(context)!.addAsNewExpiryItem,
+                              style: TextStyle(
+                                  fontFamily: 'KidariFont',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white70
+                              )
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.navy06,
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(vertical: 12)
+                          ),
                           onPressed: () async {
                             Navigator.pop(dialogContext); // 팝업 닫기
 
@@ -493,10 +599,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SnackBar(
                                     content:
                                     Text(
-                                        AppLocalizations.of(context)!.addedWithNewExpiry(item.name, countToProcess),//"${item.name} $countToProcess개가 새 유통기한으로 추가되었습니다! 🎉",
-                                        style: TextStyle(fontFamily: 'KidariFont')
+                                        AppLocalizations.of(context)!.addedWithNewExpiry(item.name, countToProcess),
+                                        style: TextStyle(
+                                            fontFamily: 'KidariFont'
+                                        )
                                     ),
-                                    behavior: SnackBarBehavior.floating));
+                                    behavior: SnackBarBehavior.fixed));
                           },
                         ),
                       ],
@@ -511,8 +619,18 @@ class _HomeScreenState extends State<HomeScreen> {
               actions: [
                 // 1. 추가 버튼 (+ 누르고 추가)
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[200], foregroundColor: Colors.black87, padding: EdgeInsets.symmetric(horizontal: 10)),
-                    child: Text(AppLocalizations.of(context)!.add, style: TextStyle(fontFamily: 'KidariFont', fontWeight: FontWeight.bold)),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[200],
+                        foregroundColor: Colors.black87,
+                        padding: EdgeInsets.symmetric(horizontal: 10)
+                    ),
+                    child: Text(
+                        AppLocalizations.of(context)!.add,
+                        style: TextStyle(
+                            fontFamily: 'KidariFont',
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.navy01)
+                    ),
                     onPressed: () async {
                       Navigator.pop(dialogContext);
                       int originalQty = item.quantity; // ★ 되돌리기를 위해 원래 수량 기억
@@ -522,18 +640,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       ScaffoldMessenger.of(mainContext).hideCurrentSnackBar(); // 이전 팝업 비우기
                       ScaffoldMessenger.of(mainContext).showSnackBar(
                           SnackBar(
-                            behavior: SnackBarBehavior.floating,
+                            behavior: SnackBarBehavior.fixed,
                             duration: Duration(seconds: 3),
                             content: Row(
                               children: [
-                                Expanded(
+                                SizedBox(
+                                  width: 180,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 2),
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.grey[200],
-                                        foregroundColor: Colors.black87,
-                                        padding: EdgeInsets.zero, // 내부 패딩 줄임
+                                        foregroundColor: Colors.white70,
+                                        padding: EdgeInsets.zero,
                                       ),
                                       onPressed: () async { /* 기존 로직 동일 */ },
                                       child: FittedBox( // 글자가 길어지면 자동으로 크기를 줄임
@@ -548,7 +667,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ScaffoldMessenger.of(mainContext).hideCurrentSnackBar();
                                     await _service.updateItemQuantity(item.id!, originalQty);
                                   },
-                                  child: Text(AppLocalizations.of(context)!.undo, style: TextStyle(color: Colors.yellowAccent, fontWeight: FontWeight.bold, fontFamily: 'KidariFont')),
+                                  child: Text(
+                                      AppLocalizations.of(context)!.undo,
+                                      style: TextStyle(
+                                          color: Colors.yellowAccent,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'KidariFont'
+                                      )
+                                  ),
                                 ),
                               ],
                             ),
@@ -574,7 +700,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ScaffoldMessenger.of(mainContext).hideCurrentSnackBar();
                       ScaffoldMessenger.of(mainContext).showSnackBar(
                           SnackBar(
-                            behavior: SnackBarBehavior.floating,
+                            behavior: SnackBarBehavior.fixed,
                             duration: Duration(seconds: 3),
                             content: Row(
                               children: [
@@ -603,10 +729,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                       await _service.updateItemQuantity(item.id!, originalQty);
                                     } else {
                                       if (!mainContext.mounted) return;
-                                      ScaffoldMessenger.of(mainContext).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.undoDiscardFromHistory, style: TextStyle(fontFamily: 'KidariFont')), behavior: SnackBarBehavior.floating));
+                                      ScaffoldMessenger.of(mainContext).showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  AppLocalizations.of(context)!.undoDiscardFromHistory,
+                                                  style: TextStyle(
+                                                      fontFamily: 'KidariFont')
+                                              ),
+                                              behavior: SnackBarBehavior.fixed)
+                                      );
                                     }
                                   },
-                                  child: Text(AppLocalizations.of(context)!.undo, style: TextStyle(color: Colors.yellowAccent, fontWeight: FontWeight.bold, fontFamily: 'KidariFont')),
+                                  child: Text(
+                                      AppLocalizations.of(context)!.undo,
+                                      style: TextStyle(
+                                          color: Colors.yellowAccent,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'KidariFont')
+                                  ),
                                 ),
                               ],
                             ),
@@ -617,8 +757,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 // 3. 먹음 버튼
                 ElevatedButton.icon(
                     icon: Icon(Icons.check, size: 16),
-                    label: Text(AppLocalizations.of(context)!.eat, style: TextStyle(fontFamily: 'KidariFont')),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white, padding: EdgeInsets.symmetric(horizontal: 10)),
+                    label: Text(AppLocalizations.of(context)!.eat,
+                        style: TextStyle(
+                            fontFamily: 'KidariFont'
+                        )
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: AppColors.appwhite,
+                        padding: EdgeInsets.symmetric(horizontal: 10)
+                    ),
                     onPressed: () async {
                       Navigator.pop(dialogContext);
                       int originalQty = item.quantity;
@@ -632,7 +780,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ScaffoldMessenger.of(mainContext).hideCurrentSnackBar();
                       ScaffoldMessenger.of(mainContext).showSnackBar(
                           SnackBar(
-                            behavior: SnackBarBehavior.floating,
+                            behavior: SnackBarBehavior.fixed,
                             duration: Duration(seconds: 3),
                             content: Row(
                               children: [
@@ -643,7 +791,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       icon: const Icon(Icons.check, size: 14),
                                       label: FittedBox(
                                         child: Text(AppLocalizations.of(context)!.eat,
-                                            style: const TextStyle(fontFamily: 'KidariFont')),
+                                            style: TextStyle(
+                                                fontFamily: 'KidariFont',
+                                                color: AppColors.appwhite)
+                                        ),
                                       ),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.green,
@@ -664,7 +815,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       await _service.updateItemQuantity(item.id!, originalQty);
                                     }
                                   },
-                                  child: Text(AppLocalizations.of(context)!.undo, style: TextStyle(color: Colors.yellowAccent, fontWeight: FontWeight.bold, fontFamily: 'KidariFont')),
+                                  child: Text(
+                                      AppLocalizations.of(context)!.undo,
+                                      style: TextStyle(
+                                          color: Colors.yellowAccent,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'KidariFont')
+                                  ),
                                 ),
                               ],
                             ),
@@ -708,7 +865,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showInviteCode(BuildContext context) async {
+  /*void _showInviteCode(BuildContext context) async {
     String code = await _service.getInviteCode();
     showDialog(
         context: context,
@@ -727,7 +884,62 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontSize: 12, color: Colors.grey))]),
             actions: [
               TextButton(onPressed: ()=>Navigator.pop(context),
-                  child: Text(AppLocalizations.of(context)!.close))])); }
+                  child: Text(AppLocalizations.of(context)!.close))])); } */ //
+
+  void _showInviteCode(BuildContext context) async {
+    String code = await _service.getInviteCode();
+
+    // 비동기 작업 후 context가 여전히 유효한지 확인 (iOS 안정성)
+    if (!context.mounted) return;
+
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+            title: Text(AppLocalizations.of(context)!.familyInviteCode),
+            content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // 코드를 누르거나 옆의 아이콘을 눌러 복사할 수 있게 Row로 감싸줍니다.
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          code,
+                          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold, letterSpacing: 2),
+                          textAlign: TextAlign.center
+                      ),
+                      const SizedBox(width: 8),
+                      // 복사 버튼 추가 ✅
+                      IconButton(
+                        icon: const Icon(Icons.copy, size: 20, color: AppColors.navy01),
+                        onPressed: () {
+                          // 1. 클립보드에 복사
+                          Clipboard.setData(ClipboardData(text: code));
+                          // 2. 아이폰 특유의 툭! 하는 진동 피드백 (iOS 감성) ✅
+                          HapticFeedback.mediumImpact();
+                          // 3. 안내 메시지 표시
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)!.copiedToClipboard ?? "코드가 복사되었습니다!"),
+                              behavior: SnackBarBehavior.fixed, // iOS에서 보기 좋게 띄움
+                              duration: const Duration(seconds: 2),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                      AppLocalizations.of(context)!.shareCode,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                ]),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(AppLocalizations.of(context)!.close))
+            ]));
+  }
 
   // 다 먹은 즐겨찾기 아이템을 다시 채우는 다이얼로그 (버그 패치 완료)
   void _showRestockDialog(BuildContext mainContext, String name, String category) {
@@ -778,7 +990,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   actions: [
-                    TextButton(child: Text(AppLocalizations.of(context)!.undo, style: TextStyle(color: Colors.grey, fontFamily: 'KidariFont')), onPressed: () => Navigator.pop(dialogContext)),
+                    TextButton(
+                        child: Text(
+                            AppLocalizations.of(context)!.undo,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: 'KidariFont'
+                            )
+                        ), onPressed: () => Navigator.pop(dialogContext)),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white),
                       child: Text(AppLocalizations.of(context)!.putInFridge, style: TextStyle(fontFamily: 'KidariFont')),
@@ -793,7 +1012,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                     AppLocalizations.of(context)!.filledItems(name, qty),//"$name $qty개 채워졌습니다! 🛒",
                                     style: TextStyle(fontFamily: 'KidariFont')
-                                ), behavior: SnackBarBehavior.floating));
+                                ), behavior: SnackBarBehavior.fixed));
                       },
                     ),
                   ],
@@ -945,13 +1164,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               margin: EdgeInsets.only(right: 4),
               padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(6)),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(6)
+              ),
               child: Text(
                   AppLocalizations.of(context)!.categoryWithEmoji(_getCategorySimpleEmoji(item.category), item.category),//"${_getCategorySimpleEmoji(item.category)} ${item.category}",
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: AppColors.navy01,
                       fontFamily: 'KidariFont')
               ),
             ),
@@ -989,8 +1211,21 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(dDay, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: isSubItem ? 16 : 18, fontFamily: 'KidariFont')),
-          if (!isSubItem) Text(DateFormat('MM.dd').format(item.expiryDate), style: TextStyle(fontSize: 15, color: Colors.grey, fontFamily: 'KidariFont')),
+          Text(dDay, style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: isSubItem ? 16 : 18,
+              fontFamily: 'KidariFont'
+          )
+          ),
+          if (!isSubItem) Text(
+              DateFormat('yyyy.MM.dd').format(item.expiryDate),
+              style: TextStyle(
+                  fontSize: 15,
+                  color: AppColors.navy01.withOpacity(0.6),
+                  fontFamily: 'KidariFont'
+              )
+          ),
         ],
       ),
     );
@@ -999,8 +1234,46 @@ class _HomeScreenState extends State<HomeScreen> {
     Widget dismissibleTile = Dismissible(
       key: Key(item.id!),
       direction: isOutOfStock ? DismissDirection.none : DismissDirection.horizontal,
-      background: Container(color: Colors.green, alignment: Alignment.centerLeft, padding: EdgeInsets.symmetric(horizontal: 20), child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [Icon(Icons.check, color: Colors.white, size: 28), SizedBox(width: 10), Text("1개 먹음", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'KidariFont'))])),
-      secondaryBackground: Container(color: Colors.red, alignment: Alignment.centerRight, padding: EdgeInsets.symmetric(horizontal: 20), child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [Text("1개 버림", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'KidariFont')), SizedBox(width: 10), Icon(Icons.delete_forever, color: Colors.white, size: 28)])),
+      background:
+      Container(
+          color: Colors.green,
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.check, color: Colors.white, size: 28),
+                SizedBox(width: 10),
+                Text("1개 먹음",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontFamily: 'KidariFont')
+                )
+              ]
+          )
+      ),
+      secondaryBackground:
+      Container(
+          color: Colors.red,
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text("1개 버림",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontFamily: 'KidariFont')
+                ),
+                SizedBox(width: 10),
+                Icon(Icons.delete_forever, color: Colors.white, size: 28)
+              ]
+          )
+      ),
       confirmDismiss: (direction) async {
         bool isConsume = (direction == DismissDirection.startToEnd);
         await _processItemCount(context, item, isConsume);
@@ -1029,9 +1302,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.kitchen_outlined, size: 60, color: Colors.grey[300]),
+            Icon(Icons.kitchen_outlined, size: 60, color: AppColors.navy02),
             SizedBox(height: 10),
-            Text(AppLocalizations.of(context)!.emptyState, style: TextStyle(color: Colors.grey, fontSize: 18, fontFamily: 'KidariFont')),
+            Text(
+                AppLocalizations.of(context)!.emptyState,
+                style: TextStyle(
+                    color: AppColors.navy02,
+                    fontSize: 18,
+                    fontFamily: 'KidariFont')),
           ],
         ),
       );
@@ -1076,19 +1354,26 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4),
               child: Row(
                 children: [
-                  // 원래 디자인 복구 ✅
                   Container(
                     padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(color: Colors.grey[100], shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                        color: AppColors.navy02,
+                        shape: BoxShape.circle),
                     child: Text(
                       getCategoryEmoji(categoryKey), // utils.dart의 함수 사용 (문자열 반환)
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.navy03),
                     ),
                   ),
                   SizedBox(width: 10),
                   Text(
                     translateCategory(categoryKey, context),
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black87, fontFamily: 'KidariFont'),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.navy02,
+                        fontFamily: 'KidariFont'),
                   ),
                 ],
               ),
@@ -1134,7 +1419,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           Flexible(
                             child: Text(
                               itemName,
-                              style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'KidariFont', fontSize: 18),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'KidariFont', color: AppColors.navy03
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -1241,19 +1529,36 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: AppColors.navy01),
           title: StreamBuilder<String>(
             stream: _service.getFridgeNameStream(),
             builder: (context, snapshot) {
-              return Text(snapshot.data ?? AppLocalizations.of(context)!.myFridge, style: TextStyle(fontFamily: 'KidariFont', fontWeight: FontWeight.bold));
+              return Text(
+                  snapshot.data ?? AppLocalizations.of(context)!.myFridge,
+                  style: TextStyle(
+                      fontFamily: 'KidariFont',
+                      fontWeight: FontWeight.bold, color: AppColors.navy01)
+              );
             },
           ),
           actions: [
-            IconButton(icon: Icon(Icons.star, color: Colors.amber), tooltip: AppLocalizations.of(context)!.manageFrequentItems, onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FavoriteScreen()))),
-            IconButton(icon: Icon(Icons.delete_outline), tooltip: AppLocalizations.of(context)!.discardHistory, onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TrashScreen()))),
-            // home_screen.dart 의 PopupMenuButton 부분
+            IconButton(
+                icon: Icon(Icons.star, color: Colors.amber),
+                tooltip: AppLocalizations.of(context)!.manageFrequentItems,
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FavoriteScreen()
+                )
+                )
+            ),
+            IconButton(
+                icon: Icon(Icons.delete_outline, color: AppColors.navy01,),
+                tooltip: AppLocalizations.of(context)!.discardHistory,
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TrashScreen()
+                )
+                )
+            ),
 
             PopupMenuButton<String>(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.settings, color: AppColors.navy01,),
               offset: Offset(0, 50),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               onSelected: (value) {
@@ -1278,11 +1583,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     value: 'category',
                     child: Row(
                         children: [
-                          Icon(Icons.category, color: Colors.blue, size: 20),
+                          Icon(Icons.category, color: AppColors.navy01, size: 20),
                           SizedBox(width: 10),
                           Text(
                               AppLocalizations.of(context)!.manageCategories,
-                              style: TextStyle(fontWeight: FontWeight.bold)
+                              style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy01)
                           )
                         ]
                     )
@@ -1291,11 +1596,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     value: 'invite',
                     child: Row(
                         children: [
-                          Icon(Icons.qr_code, color: Colors.purple, size: 20),
+                          Icon(Icons.qr_code, color: AppColors.navy01, size: 20),
                           SizedBox(width: 10),
                           Text(
                               AppLocalizations.of(context)!.checkInviteCode,
-                              style: TextStyle(fontWeight: FontWeight.bold)
+                              style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy01)
                           )
                         ]
                     )
@@ -1304,11 +1609,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     value: 'language',
                     child: Row(
                         children: [
-                          Icon(Icons.language, color: Colors.teal, size: 20),
+                          Icon(Icons.language, color: AppColors.navy01, size: 20),
                           SizedBox(width: 10),
                           Text(
                               AppLocalizations.of(context)!.languageSettings ?? "언어 설정",
-                              style: TextStyle(fontWeight: FontWeight.bold)
+                              style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy01)
                           )
                         ]
                     )
@@ -1319,9 +1624,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     value: 'rename',
                     child: Row(
                         children: [
-                          Icon(Icons.edit, color: Colors.orange, size: 20),
+                          Icon(Icons.edit, color: AppColors.navy01, size: 20),
                           SizedBox(width: 10),
-                          Text(AppLocalizations.of(context)!.renameFridge)
+                          Text(
+                            AppLocalizations.of(context)!.renameFridge,
+                            style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy01),
+                          )
                         ]
                     )
                 ),
@@ -1333,14 +1641,14 @@ class _HomeScreenState extends State<HomeScreen> {
           bottom: TabBar(
             labelStyle: TextStyle(fontFamily: 'KidariFont', fontWeight: FontWeight.bold, fontSize: 16),
             unselectedLabelStyle: TextStyle(fontFamily: 'KidariFont', fontSize: 16),
-            indicatorColor: Colors.blue,
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.white70,
+            labelColor: Colors.white70,
+            unselectedLabelColor: AppColors.navy01,
             tabs: [
               Tab(text: AppLocalizations.of(context)!.all),
               Tab(text: AppLocalizations.of(context)!.storageFridge),
               Tab(text: AppLocalizations.of(context)!.storageFreezer),
-              Tab(text: AppLocalizations.of(context)!.storagePantry), // [수정] 탭 이름 변경
+              Tab(text: AppLocalizations.of(context)!.storagePantry),
             ],
           ),
         ),
@@ -1357,7 +1665,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildLocationList(context, items, null),
                 _buildLocationList(context, items, '냉장'),
                 _buildLocationList(context, items, '냉동'),
-                _buildLocationList(context, items, '팬트리'),
+                _buildLocationList(context, items, '펜트리'),
               ],
             );
           },

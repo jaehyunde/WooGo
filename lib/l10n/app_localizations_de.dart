@@ -10,7 +10,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String daysExpired(int days) {
-    return '$days Tage abgelaufen';
+    return 'abgelaufen';
   }
 
   @override
@@ -18,7 +18,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String daysLeft(int days) {
-    return '$days Tage übrig';
+    return '$days Tage';
   }
 
   @override
@@ -161,7 +161,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get undoWithSpace => 'Rückgängig';
 
   @override
-  String get fillFridgePlus => 'Kühlschrank auffüllen +';
+  String get fillFridgePlus => 'Kühlschrank auffüllen';
 
   @override
   String get itemName => 'Artikelname';
@@ -258,7 +258,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deleteFavorite => 'Favorit löschen';
 
   @override
-  String deleteFavoriteConfirm(Object item) {
+  String deleteFavoriteConfirm(String item) {
     return 'Möchten Sie $item aus der Liste der häufig verwendeten Artikel entfernen? (Der Stern bei Artikeln im Kühlschrank wird ebenfalls entfernt.)';
   }
 
@@ -473,7 +473,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get trashTitle => 'Papierkorb 🗑️';
+  String get trashTitle => 'Papierkorb';
 
   @override
   String get restoreSelected => 'Ausgewählte wiederherstellen';
@@ -564,4 +564,7 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get enterFridgeName =>
       'Bitte geben Sie einen Namen für den Kühlschrank ein';
+
+  @override
+  String get copiedToClipboard => 'kopiert';
 }

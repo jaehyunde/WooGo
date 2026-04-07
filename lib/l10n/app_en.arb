@@ -1,5 +1,5 @@
 {
-  "daysExpired": "{days} days expired",
+  "daysExpired": "expired",
   "@daysExpired": {
         "placeholders": {
           "days": {
@@ -8,7 +8,7 @@
         }
       },
   "today": "today",
-  "daysLeft": "{days} days left",
+  "daysLeft": "{days} days",
   "@daysLeft": {
           "placeholders": {
             "days": {
@@ -98,7 +98,7 @@
   "added": "Added",
   "alreadySaved": "Already saved",
   "undoWithSpace": "Undo",
-  "fillFridgePlus": "Fill fridge +",
+  "fillFridgePlus": "Fill fridge",
   "itemName": "Item name",
   "itemNameExample": "e.g. apple, tofu",
   "error": "Error",
@@ -137,6 +137,14 @@
   "checkStarWhenAdding": "Try checking the star when adding an item!",
   "deleteFavorite": "Delete favorite",
   "deleteFavoriteConfirm": "Do you want to remove {item} from the frequently used list? (The star on items in the fridge will also be removed.)",
+  "@deleteFavoriteConfirm": {
+      "description": "dellte from list",
+      "placeholders": {
+          "item": {
+              "type": "String"
+          }
+      }
+    },
   "delete": "Delete",
   "deleted": "Deleted.",
   "touchFridgeToOpen": "Touch the fridge to open it",
@@ -324,7 +332,7 @@
     }
   },
 
-  "trashTitle": "Trash 🗑️",
+  "trashTitle": "Trash",
 
   "restoreSelected": "Restore selected",
   "deleteSelectedPermanently": "Delete selected permanently",
@@ -388,5 +396,6 @@
   "categoryEtc": "Others",
   "categoryFish": "Fish",
   "confirm": "Confirm",
-  "enterFridgeName": "Please enter a name for the fridge"
+  "enterFridgeName": "Please enter a name for the fridge",
+  "copiedToClipboard": "Copied"
 }

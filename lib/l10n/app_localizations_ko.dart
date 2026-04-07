@@ -10,7 +10,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String daysExpired(int days) {
-    return '$days일 지남';
+    return '기한지남';
   }
 
   @override
@@ -18,7 +18,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String daysLeft(int days) {
-    return '$days일 남음';
+    return '$days일';
   }
 
   @override
@@ -160,7 +160,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get undoWithSpace => '실행 취소';
 
   @override
-  String get fillFridgePlus => '냉장고 채우기 +';
+  String get fillFridgePlus => '냉장고 채우기';
 
   @override
   String get itemName => '아이템 이름';
@@ -254,7 +254,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get deleteFavorite => '즐겨찾기 삭제';
 
   @override
-  String deleteFavoriteConfirm(Object item) {
+  String deleteFavoriteConfirm(String item) {
     return '$item을(를) 자주 쓰는 목록에서 지우시겠습니까? (냉장고에 있는 아이템의 별표도 해제됩니다)';
   }
 
@@ -466,7 +466,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get trashTitle => '휴지통 🗑️';
+  String get trashTitle => '휴지통';
 
   @override
   String get restoreSelected => '선택 항목 복구';
@@ -556,4 +556,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get enterFridgeName => '냉장고 이름을 입력해주세요';
+
+  @override
+  String get copiedToClipboard => '코드가 복사 되었습니다.';
 }

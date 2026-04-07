@@ -103,7 +103,7 @@ abstract class AppLocalizations {
   /// No description provided for @daysExpired.
   ///
   /// In ko, this message translates to:
-  /// **'{days}일 지남'**
+  /// **'기한지남'**
   String daysExpired(int days);
 
   /// No description provided for @today.
@@ -115,7 +115,7 @@ abstract class AppLocalizations {
   /// No description provided for @daysLeft.
   ///
   /// In ko, this message translates to:
-  /// **'{days}일 남음'**
+  /// **'{days}일'**
   String daysLeft(int days);
 
   /// No description provided for @storageFridge.
@@ -373,7 +373,7 @@ abstract class AppLocalizations {
   /// No description provided for @fillFridgePlus.
   ///
   /// In ko, this message translates to:
-  /// **'냉장고 채우기 +'**
+  /// **'냉장고 채우기'**
   String get fillFridgePlus;
 
   /// No description provided for @itemName.
@@ -550,11 +550,11 @@ abstract class AppLocalizations {
   /// **'즐겨찾기 삭제'**
   String get deleteFavorite;
 
-  /// No description provided for @deleteFavoriteConfirm.
+  /// 목록에서 삭제
   ///
   /// In ko, this message translates to:
   /// **'{item}을(를) 자주 쓰는 목록에서 지우시겠습니까? (냉장고에 있는 아이템의 별표도 해제됩니다)'**
-  String deleteFavoriteConfirm(Object item);
+  String deleteFavoriteConfirm(String item);
 
   /// No description provided for @delete.
   ///
@@ -913,7 +913,7 @@ abstract class AppLocalizations {
   /// No description provided for @trashTitle.
   ///
   /// In ko, this message translates to:
-  /// **'휴지통 🗑️'**
+  /// **'휴지통'**
   String get trashTitle;
 
   /// No description provided for @restoreSelected.
@@ -1077,6 +1077,12 @@ abstract class AppLocalizations {
   /// In ko, this message translates to:
   /// **'냉장고 이름을 입력해주세요'**
   String get enterFridgeName;
+
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In ko, this message translates to:
+  /// **'코드가 복사 되었습니다.'**
+  String get copiedToClipboard;
 }
 
 class _AppLocalizationsDelegate
